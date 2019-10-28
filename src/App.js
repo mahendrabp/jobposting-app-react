@@ -1,25 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
+import { BrowserRouter, Router, Switch, Route, Link } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './components/Dashboard';
+import LandingPage from './pages/LandingPage';
+
+import NavBar from './components/NavBar';
+import './assets/vendor/nucleo/css/nucleo.css';
+import './assets/vendor/@fortawesome/fontawesome-free/css/all.min.css';
+import './assets/scss/argon-dashboard-react.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {/* <ul>
+        <li>
+          <Link to="/">Home</Link>
+          <Link to="/register">Regis</Link>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      </ul>
+      <Switch>
+        <Route path="/" component={Login} exact></Route>
+        <Route path="/register" component={Register} exact></Route>
+        <Route path="/dashboard" component={Dashboard} exact></Route>
+      </Switch> */}
+
+      <Switch>
+        <Route path="/" component={LandingPage} exact></Route>
+        <Route path="/login" component={Login} exact></Route>
+        <Route path="/register" component={Register} exact></Route>
+        <Route path="/dashboard" component={Dashboard} exact></Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
