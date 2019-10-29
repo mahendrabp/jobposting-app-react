@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Alert, Form, Input, Button, Row, Col, FormGroup } from 'reactstrap';
+
+// import backgroundImage from './6.svg';
+// import '../login.css';
 
 class Register extends Component {
   constructor(props) {
@@ -10,45 +12,26 @@ class Register extends Component {
       email: '',
       password: '',
       buttonDisabled: false,
-      message: '',
-      visible: true
+      message: ''
     };
-
-    this.onDismiss = this.onDismiss.bind(this);
-  }
-
-  onDismiss() {
-    this.setState({ visible: false });
   }
 
   registerResult = () => {
-    if (this.state.message === 'success adding new user') {
+    console.log();
+    if (this.state.message === 'Success to register new user') {
       return (
         <>
-          <Alert
-            color="success"
-            isOpen={this.state.visible}
-            toggle={this.onDismiss}
-          >
+          <div class="alert alert-success mt-4" role="alert">
             {this.state.message}
-          </Alert>
-          <Redirect to="/dashboard" />
+          </div>
+          <Redirect to="/" />
         </>
       );
-    } else if (
-      this.state.message === 'Username already exist.' ||
-      this.state.message === 'email already exist'
-    ) {
+    } else if (this.state.message === 'email already exist.') {
       return (
-        <>
-          <Alert
-            color="danger"
-            isOpen={this.state.visible}
-            toggle={this.onDismiss}
-          >
-            {this.state.message}
-          </Alert>
-        </>
+        <div class="alert alert-danger mt-4" role="alert">
+          {this.state.message}
+        </div>
       );
     }
   };
@@ -61,7 +44,7 @@ class Register extends Component {
     e.preventDefault();
     this.setState({ buttonDisabled: true });
 
-    var url = 'http://localhost:5000/api/v1/users/register/';
+    var url = 'http://localhost:5200/api/v1/users/register';
     var payload = {
       email: this.state.email,
       password: this.state.password
@@ -69,83 +52,105 @@ class Register extends Component {
 
     axios
       .post(url, payload)
-      .then(res => {
-        console.log(res);
-        let message = res.data.message;
-        if (message === 'Success to register new user') {
+      .then(response => {
+        console.log(response);
+        let message = response.data.message;
+        if (
+          this.state.message === 'Username already exist.' ||
+          this.state.message === 'Register failed.'
+        ) {
           this.setState({
             buttonDisabled: true,
-            message: 'success adding new user'
+            message
           });
         } else {
           this.setState({
             buttonDisabled: false,
-            message: 'email already exist'
+            message: 'Register failed.'
           });
         }
       })
       .catch(error => {
         console.log(error);
-        this.setState({
-          buttonDisabled: false,
-          message: 'email already exist'
-        });
+        let message = error.response.data.message;
+        if (message === 'email already exist.') {
+          this.setState({
+            buttonDisabled: false,
+            message
+          });
+        } else {
+          this.setState({
+            buttonDisabled: false,
+            message: 'Register failed.'
+          });
+        }
       });
   };
 
   render() {
     return (
-      <>
+      <section class="fdb-block py-0">
         <div
-          style={{
-            marginRight: '-400px',
-            marginLeft: '500px',
-            marginTop: '40px'
-          }}
+          class="container py-5 my-5"
+          // style={{ backgroundImage: `url(${backgroundImage})` }}
         >
-          <Row>
-            <Col lg="5" md="7">
-              <h2>
-                <b>Register</b>
-              </h2>
-              <Form onSubmit={this.onSubmitHandler}>
-                <FormGroup>
-                  <Input
-                    type="text"
-                    name="email"
-                    placeholder="Email..."
-                    value={this.state.email}
-                    onChange={this.inputOnChangeHandler}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    type="password"
-                    name="password"
-                    placeholder="Password..."
-                    value={this.state.password}
-                    onChange={this.inputOnChangeHandler}
-                  />
-                </FormGroup>
-
-                <Button
-                  className="mt-4"
-                  color="primary"
-                  type="button"
-                  disabled={this.state.buttonDisabled}
+          <div class="row">
+            <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-left fdb-box">
+              <form onSubmit={this.onSubmitHandler}>
+                <div class="row">
+                  <div class="col">
+                    <h1>Register</h1>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mt-4">
+                    <input
+                      type="text"
+                      name="email"
+                      id="email"
+                      className="form-control"
+                      placeholder="email"
+                      value={this.state.email}
+                      onChange={this.inputOnChangeHandler}
+                    />
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      className="form-control"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.inputOnChangeHandler}
+                    />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col">
+                    <button class="btn btn-primary btn-raised" type="submit">
+                      Register
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <p className="mt-4">
+                Already have an account?{' '}
+                <Link
+                  className="btn btn-link pl-1 text-capitalize"
+                  to="/"
+                  exact
                 >
-                  Create account
-                </Button>
-              </Form>
-
-              <p>
-                Already have an account? <Link to="/login">Login Here</Link>{' '}
+                  Login here.
+                </Link>
               </p>
               {this.registerResult()}
-            </Col>
-          </Row>
+            </div>
+          </div>
         </div>
-      </>
+      </section>
     );
   }
 }

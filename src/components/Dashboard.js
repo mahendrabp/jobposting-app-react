@@ -23,37 +23,11 @@ import { Container } from 'reactstrap';
 // core components
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
-import JobItem from '../pages/JobItem';
+import Job from '../pages/Job';
 
 // import routes from 'routes.js';
 
 class Dashbboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      next: '',
-      prev: '',
-      isLoading: true
-    };
-  }
-
-  componentDidMount() {
-    this.getData().then(data => {
-      // console.log(data);
-      this.setState({
-        data
-      });
-    });
-  }
-
-  getData = async () => {
-    const url = await Axios.get('http://localhost:5000/api/v1/jobs');
-    const getAllJobs = url.data.data.result;
-    // console.log(getAllJobs);
-    return getAllJobs;
-  };
-
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -73,23 +47,7 @@ class Dashbboard extends React.Component {
             imgAlt: '...'
           }}
         />
-        <div className="main-content" ref="mainContent">
-          {this.state.data.map(
-            (job, index) => (
-              console.log(job),
-              (
-                <JobItem
-                  key={index}
-                  job={job.job}
-                  location={job.location}
-                  category={job.category}
-                  company={job.company}
-                  description={job.description}
-                ></JobItem>
-              )
-            )
-          )}
-        </div>
+        <Job></Job>
       </>
     );
   }

@@ -94,7 +94,7 @@ class Header extends React.Component {
                       tag={Link}
                     >
                       <i className="ni ni-key-25" />
-                      <span className="nav-link-inner--text">Profile</span>
+                      <span className="nav-link-inner--text">Add Job</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>

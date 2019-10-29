@@ -72,7 +72,7 @@ class Login extends Component {
   onSubmitHandler = e => {
     e.preventDefault();
 
-    var url = 'http://localhost:5000/api/v1/users/login';
+    var url = 'http://localhost:5200/api/v1/users/login';
     var payload = {
       email: this.state.email,
       password: this.state.password
@@ -80,9 +80,9 @@ class Login extends Component {
 
     Axios.post(url, payload)
       .then(res => {
-        console.log(res.data.status);
         var dataResponse = res.data;
         let success = dataResponse.status;
+        console.log(success);
 
         if (success === 200) {
           this.setState({
