@@ -78,11 +78,7 @@ class Header extends React.Component {
                     </NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink
-                      className="nav-link-icon"
-                      to="/auth/register"
-                      tag={Link}
-                    >
+                    <NavLink className="nav-link-icon" to="/company" tag={Link}>
                       <i className="ni ni-circle-08" />
                       <span className="nav-link-inner--text">Company</span>
                     </NavLink>

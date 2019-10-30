@@ -5,6 +5,7 @@ import { BrowserRouter, Router, Switch, Route, Link } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './components/Dashboard';
+import Company from './pages/Company';
 
 import NavBar from './components/NavBar';
 import './assets/vendor/nucleo/css/nucleo.css';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" component={Login} exact></Route>
         <Route path="/register" component={Register} exact></Route>
         <Route path="/dashboard" component={Dashboard} exact></Route>
+        <Route path="/company" component={Company} exact></Route>
       </Switch>
     </BrowserRouter>
   );

@@ -24,10 +24,11 @@ import { Container } from 'reactstrap';
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 import Job from '../pages/Job';
+// import Company from '../pages/Company';
 
 // import routes from 'routes.js';
 
-class Dashbboard extends React.Component {
+class Dashboard extends React.Component {
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -48,9 +49,10 @@ class Dashbboard extends React.Component {
           }}
         />
         <Job></Job>
+        {/* <Company></Company> */}
       </>
     );
   }
 }
 
-export default Dashbboard;
+export default Dashboard;

@@ -136,7 +136,7 @@ class Sidebar extends React.Component {
             </NavbarBrand>
           ) : null}
           {/* User */}
-          <Nav className="align-items-center d-md-none">
+          {/* <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
               <DropdownToggle nav className="nav-link-icon">
                 <i className="ni ni-bell-55" />
@@ -190,11 +190,11 @@ class Sidebar extends React.Component {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-          </Nav>
+          </Nav> */}
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
             {/* Collapse header */}
-            <div className="navbar-collapse-header d-md-none">
+            {/* <div className="navbar-collapse-header d-md-none">
               <Row>
                 {logo ? (
                   <Col className="collapse-brand" xs="6">
@@ -220,7 +220,7 @@ class Sidebar extends React.Component {
                   </button>
                 </Col>
               </Row>
-            </div>
+            </div> */}
             {/* Form */}
             <Form className="mt-4 mb-3 d-md-none">
               <InputGroup className="input-group-rounded input-group-merge">
@@ -242,25 +242,29 @@ class Sidebar extends React.Component {
             {/* Divider */}
             <hr className="my-3" />
             {/* Heading */}
-            <h6 className="navbar-heading text-muted">Documentation</h6>
+            <h6 className="navbar-heading text-muted">Menu</h6>
             {/* Navigation */}
             <Nav className="mb-md-3" navbar>
               <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/overview?ref=adr-admin-sidebar">
-                  <i className="ni ni-spaceship" />
-                  Getting started
+                <NavLink>
+                  <a
+                    data-toggle="modal"
+                    data-target="#modalFormJob"
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <i className="ni ni-spaceship" />
+                    <span>Add Job</span>
+                  </a>
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/colors?ref=adr-admin-sidebar">
-                  <i className="ni ni-palette" />
-                  Foundation
+                <NavLink>
+                  <i className="ni ni-palette" />- Will Add Soon -
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                  <i className="ni ni-ui-04" />
-                  Components
+                <NavLink>
+                  <i className="ni ni-ui-04" />- Will Add Soon -
                 </NavLink>
               </NavItem>
             </Nav>

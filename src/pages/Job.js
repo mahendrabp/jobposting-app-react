@@ -17,6 +17,7 @@
 */
 import React from 'react';
 import Axios from 'axios';
+import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 // reactstrap components
 import { Container, FormGroup, Label, Input, Row, Col } from 'reactstrap';
@@ -24,6 +25,8 @@ import { Container, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 import JobItem from './JobItem';
 import Loading from '../components/Loading';
+import ModalJob from '../components/ModalJob';
+import ls from 'local-storage';
 
 // import routes from 'routes.js';
 
@@ -36,23 +39,32 @@ class Job extends React.Component {
       prev: '',
       isLoading: true,
 
-      name: '',
+      search: '',
       company: '',
       limit: 5,
       page: '1',
       sortby: 'name',
       orderby: 'asc',
+      totalPage: '',
 
-      totalPage: ''
+      selectedId: [],
+      name: '',
+      description: '',
+      salary: '',
+      location: '',
+      category_id: 1,
+      company_id: 1,
+      formStatus: 'Add',
+      buttonDisabled: false
     };
   }
 
-  getJobs = (name, company, limit, page, sortby, orderby) => {
-    let url = `http://localhost:5200/api/v1/jobs?name=${name}&company=${company}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
+  getJobs = (search, company, limit, page, sortby, orderby) => {
+    let url = `http://localhost:5200/api/v1/jobs?name=${search}&company=${company}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
     Axios.get(url)
       .then(result => {
         const data = result.data.data.result;
-        console.log(data);
+        // console.log(data);
         this.setState({
           data: data
         });
@@ -70,7 +82,7 @@ class Job extends React.Component {
     //   });
     // });
     this.getJobs(
-      this.state.name,
+      this.state.search,
       this.state.company,
       this.state.limit,
       this.state.page,
@@ -86,7 +98,7 @@ class Job extends React.Component {
       sortby
     });
     this.getJobs(
-      this.state.name,
+      this.state.search,
       this.state.company,
       this.state.limit,
       this.state.page,
@@ -102,7 +114,7 @@ class Job extends React.Component {
       orderby
     });
     this.getJobs(
-      this.state.name,
+      this.state.search,
       this.state.company,
       this.state.limit,
       this.state.page,
@@ -111,20 +123,20 @@ class Job extends React.Component {
     );
   };
 
-  getName = e => {
+  getSearch = e => {
     e.preventDefault();
-    let name = e.target.value;
-    console.log(name.length);
+    let search = e.target.value;
+    console.log(search.length);
     this.setState({
-      name
+      search
     });
-    if (name.length >= 3) {
+    if (search.length >= 3) {
       this.setState({
         page: 1
       });
 
       this.getJobs(
-        name,
+        search,
         this.state.company,
         this.state.limit,
         this.state.page,
@@ -154,7 +166,7 @@ class Job extends React.Component {
         page: 1
       });
       this.getJobs(
-        this.state.name,
+        this.state.search,
         company,
         this.state.limit,
         this.state.page,
@@ -163,7 +175,7 @@ class Job extends React.Component {
       );
     } else {
       this.getJobs(
-        this.state.name,
+        this.state.search,
         '',
         this.state.limit,
         this.state.page,
@@ -181,7 +193,7 @@ class Job extends React.Component {
       limit
     });
     this.getJobs(
-      this.state.name,
+      this.state.search,
       this.state.company,
       limit,
       this.state.page, // sebelumnya 1
@@ -194,11 +206,120 @@ class Job extends React.Component {
     const totalPage = this.state.totalPage;
   };
 
+  // ifEmptyJobs = () => {
+  //   const data = this.state.data;
+  //   if (data.length <= 0 || data.length === null) {
+  //     return <h2 className="h5 text-center">Jobs not found.</h2>;
+  //   }
+  // };
+
   ifEmptyJobs = () => {
-    const data = this.state.data;
-    if (data.length <= 0 || data.length === null) {
-      return <h2 className="h5 text-center">Jobs not found.</h2>;
+    let data = [...this.state.data];
+    // console.log(data);
+    if (data && data !== undefined && data.length >= 1) {
+      return (
+        <div class="row">
+          {data !== '' && data !== [] && data !== null && data !== 0 ? (
+            <JobItem
+              job={this.state.data}
+
+              // selected={this.state.selectedId}
+              // menuClick={(id) => this.menuClickHandler(id)}
+              // editButtonClick={(product) => this.editButtonHandler(product)}
+              // deleteButtonClick={(id) => this.deleteButtonHandler(id)}
+            />
+          ) : (
+            <Loading />
+          )}
+        </div>
+      );
+    } else {
+      return <h2 className="h5 text-center">Items not found.</h2>;
     }
+  };
+
+  inputOnChangeHandler = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // inputFileOnChangeHandler = e => {
+  //   this.setState({
+  //     image: e.target.files[0]
+  //   });
+  // };
+
+  addJob = (url, payload, header) => {
+    axios
+      .post(url, payload, header)
+      .then(response => {
+        console.log(response);
+        var job = [...this.state.data];
+        console.log(job);
+        job.push(response.data.data.result);
+        this.setState({
+          data: job,
+
+          name: '',
+          description: '',
+          location: '',
+          category_id: '',
+          company_id: '',
+          salary: '',
+          formStatus: 'Add'
+        });
+        this.getJobs(
+          this.state.search,
+          this.state.company,
+          this.state.limit,
+          this.state.page, // sebelumnya 1
+          this.state.sortby,
+          this.state.orderby
+        );
+        this.closeModalForm();
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({
+          buttonDisabled: false
+        });
+      });
+  };
+
+  onSubmitHandler = e => {
+    e.preventDefault();
+    // this.setState({ buttonDisabled: true });
+
+    // var url;
+    const url = 'http://localhost:5200/api/v1/jobs';
+
+    var payload = new FormData();
+
+    payload.set('name', this.state.name);
+    payload.set('description', this.state.description);
+    payload.set('salary', this.state.salary);
+    payload.set('location', this.state.location);
+    // payload.append('image', this.state.image);
+    payload.set('category_id', this.state.category_id);
+    payload.set('company_id', this.state.company_id);
+
+    const header = {
+      headers: {
+        Authorization: `Bearer ${ls.get('token')}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    this.addJob(url, payload, header);
+
+    // if (this.state.formStatus === 'Add') {
+    //   url = 'http://localhost:5200/api/v1/jobs';
+    //   this.addJob(url, payload, header);
+    // } else {
+    //   url = `http://localhost:5200/api/v1/jobs`;
+    //   this.addJob(url, payload, header);
+    // }
   };
 
   // getData = async () => {
@@ -227,20 +348,20 @@ class Job extends React.Component {
                 id="search"
                 class="form-control form-control-sm"
                 value={this.state.search}
-                onChange={this.getName}
+                onChange={this.getSearch}
               />
             </div> */}
 
             <FormGroup>
-              <Label for="name">Search</Label>
+              <Label for="search">Search</Label>
               <input
-                type="name"
-                name="name"
-                id="name"
+                type="search"
+                name="search"
+                id="search"
                 placeholder="search placeholder"
                 className="form-control"
-                value={this.state.name}
-                onChange={this.getName}
+                value={this.state.search}
+                onChange={this.getSearch}
               />
             </FormGroup>
 
@@ -329,8 +450,19 @@ class Job extends React.Component {
           </Row>
 
           {this.ifEmptyJobs()}
+          <ModalJob
+            formStatus={this.state.formStatus}
+            onSubmitHandler={this.onSubmitHandler}
+            inputOnChangeHandler={this.inputOnChangeHandler}
+            name={this.state.name}
+            description={this.state.description}
+            location={this.state.location}
+            category_id={this.state.category_id}
+            company_id={this.state.company_id}
+            salary={this.state.salary}
+          ></ModalJob>
 
-          {this.state.data.map(
+          {/* {this.state.data.map(
             (job, index) => (
               console.log(job),
               (
@@ -341,10 +473,11 @@ class Job extends React.Component {
                   category={job.category}
                   company={job.company}
                   description={job.description}
+                  logo={job.logo}
                 ></JobItem>
               )
             )
-          )}
+          )} */}
         </div>
       </>
     );
