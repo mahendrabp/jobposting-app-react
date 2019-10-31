@@ -12,7 +12,8 @@ class Register extends Component {
       email: '',
       password: '',
       buttonDisabled: false,
-      message: ''
+      message: '',
+      isSuccess: false
     };
   }
 
@@ -71,19 +72,24 @@ class Register extends Component {
         }
       })
       .catch(error => {
-        console.log(error);
         let message = error.response.data.message;
-        if (message === 'email already exist.') {
+        console.log(message);
+        if (this.state.isSuccess === false) {
           this.setState({
-            buttonDisabled: false,
-            message
-          });
-        } else {
-          this.setState({
-            buttonDisabled: false,
-            message: 'Register failed.'
+            message: message
           });
         }
+        // if (message === 'email already exist.') {
+        //   this.setState({
+        //     buttonDisabled: false,
+        //     message
+        //   });
+        // } else {
+        //   this.setState({
+        //     buttonDisabled: false,
+        //     message: 'Register failed.'
+        //   });
+        // }
       });
   };
 

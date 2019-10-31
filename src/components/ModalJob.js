@@ -13,7 +13,7 @@ const ModalJob = props => (
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalFormJobLabel">
-            {props.formStatus} Add Job
+            {props.formStatus} Job
           </h5>
           <button
             type="button"
@@ -36,6 +36,7 @@ const ModalJob = props => (
                 className="form-control"
                 value={props.name}
                 onChange={props.inputOnChangeHandler}
+                required
               />
             </div>
 
@@ -48,6 +49,7 @@ const ModalJob = props => (
                 className="form-control"
                 value={props.description}
                 onChange={props.inputOnChangeHandler}
+                required
               />
             </div>
             <div className="form-group">
@@ -59,22 +61,9 @@ const ModalJob = props => (
                 className="form-control"
                 value={props.location}
                 onChange={props.inputOnChangeHandler}
+                required
               />
             </div>
-
-            {/* <div class="form-group">
-              <label for="image_file">Image</label>
-              <input
-                type="file"
-                class="form-control-file"
-                name="image_file"
-                id="image_file"
-                onChange={props.inputFileOnChangeHandler}
-              />
-              <small class="text-muted">
-                The file must be an image in jpg, jpeg, png, or gif format.
-              </small>
-            </div> */}
 
             <div className="form-group">
               <label for="category_id">Category</label>
@@ -85,8 +74,14 @@ const ModalJob = props => (
                 onChange={props.inputOnChangeHandler}
                 value={props.category_id}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
+                {/* {props.job.map(job => (
+                  <option value="1">{job.category}</option>
+                ))} */}
+                {props.dataCategory.map(dataCategory => (
+                  <option value={Number(dataCategory.id)}>
+                    {dataCategory.category}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -99,8 +94,12 @@ const ModalJob = props => (
                 onChange={props.inputOnChangeHandler}
                 value={props.company_id}
               >
-                <option value="1">1</option>
-                <option value="2">2</option>
+                {props.dataCompany.map(dataCompany => (
+                  <option value={Number(dataCompany.id)}>
+                    {dataCompany.name}
+                  </option>
+                ))}
+                {/* <option value="1">1</option> */}
               </select>
             </div>
 
@@ -113,20 +112,9 @@ const ModalJob = props => (
                 className="form-control"
                 value={props.salary}
                 onChange={props.inputOnChangeHandler}
+                required
               />
             </div>
-
-            {/* <div className="form-group">
-              <label for="stock">Stock</label>
-              <input
-                type="number"
-                name="stock"
-                id="stock"
-                className="form-control"
-                value={props.stock}
-                onChange={props.inputOnChangeHandler}
-              />
-            </div> */}
           </div>
 
           <div class="modal-footer">
@@ -139,13 +127,15 @@ const ModalJob = props => (
               Cancel
             </button>
             <button
+              disabled={props.buttonDisabled}
               type="submit"
               class="btn btn-success btn-raised ml-2"
-              disabled={props.buttonDisabled}
             >
               Save
             </button>
           </div>
+
+          {props.addJobInvalid}
         </form>
       </div>
     </div>
@@ -153,71 +143,3 @@ const ModalJob = props => (
 );
 
 export default ModalJob;
-
-// import React from 'react';
-
-// const ModalJob = props => (
-//   <div
-//     class="modal fade"
-//     id="modalFormJob"
-//     tabindex="-1"
-//     role="dialog"
-//     aria-labelledby="modalFormJobLabel"
-//     aria-hidden="true"
-//   >
-//     <div class="modal-dialog" role="document">
-//       <div class="modal-content">
-//         <div class="modal-header">
-//           <h5 class="modal-title" id="modalFormJobLabel">
-//             {props.formStatus} Product Item
-//           </h5>
-//           <button
-//             type="button"
-//             id="closeModalForm"
-//             class="close"
-//             data-dismiss="modal"
-//             aria-label="Close"
-//           >
-//             <span aria-hidden="true">&times;</span>
-//           </button>
-//         </div>
-//         <form onSubmit={props.onSubmitHandler}>
-//           <div class="modal-body">
-//             <div className="form-group">
-//               <label for="name">Name</label>
-
-//               <input
-//                 type="text"
-//                 name="name"
-//                 id="name"
-//                 className="form-control"
-//                 value={props.name}
-//                 onChange={props.inputOnChangeHandler}
-//               />
-//             </div>
-//           </div>
-
-//           <div class="modal-footer">
-//             <button
-//               type="button"
-//               class="btn btn-danger btn-raised"
-//               data-dismiss="modal"
-//               //   onClick={props.cancelButtonHandler}
-//             >
-//               Cancel
-//             </button>
-//             <button
-//               type="submit"
-//               class="btn btn-primary btn-raised ml-2"
-//               //   disabled={props.buttonDisabled}
-//             >
-//               Save
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   </div>
-// );
-
-// export default ModalJob;

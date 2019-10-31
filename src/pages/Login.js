@@ -46,7 +46,8 @@ class Login extends Component {
       password: '',
       buttonDisabled: false,
       message: '',
-      visible: true
+      visible: true,
+      isLogin: ''
     };
 
     this.onDismiss = this.onDismiss.bind(this);
@@ -59,15 +60,6 @@ class Login extends Component {
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-
-  // handleChange(e) {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }
 
   onSubmitHandler = e => {
     e.preventDefault();
@@ -82,41 +74,44 @@ class Login extends Component {
       .then(res => {
         var dataResponse = res.data;
         let success = dataResponse.status;
-        console.log(success);
-
+        console.log(res.config.data);
         if (success === 200) {
+          ls.set('token', dataResponse.token);
+          // ls.set('email', dataResponse.email);
           this.setState({
+            isLogin: true,
             buttonDisable: true,
-            message: 'Login Success'
+            message: dataResponse.message
           });
         } else {
           this.setState({
-            buttonDisable: false,
-            message: 'Login Failed'
+            isLogin: false,
+            buttonDisable: false
           });
         }
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
         this.setState({
+          isLogin: false,
           buttonDisable: false,
-          message: 'Login Failed'
+          message: err.response.data.message
         });
       });
   };
 
   loginInvalid = () => {
-    if (this.state.message === 'Login Failed') {
+    if (this.state.isLogin === false) {
       return (
         <Alert
           color="danger"
           isOpen={this.state.visible}
           toggle={this.onDismiss}
         >
-          Invalid email/password
+          {this.state.message}
         </Alert>
       );
-    } else if (this.state.message === 'Login Success') {
+    } else if (this.state.isLogin === true) {
       return (
         <>
           <Alert
@@ -124,7 +119,7 @@ class Login extends Component {
             isOpen={this.state.visible}
             toggle={this.onDismiss}
           >
-            Login Success
+            {this.state.message}
           </Alert>
           <Redirect to="/dashboard" />
         </>

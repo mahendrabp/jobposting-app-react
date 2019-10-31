@@ -17,9 +17,11 @@
 */
 import React from 'react';
 import Axios from 'axios';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import ls from 'local-storage';
 // reactstrap components
 import { Container } from 'reactstrap';
+
 // core components
 import NavBar from './NavBar';
 import Sidebar from './Sidebar';
@@ -32,26 +34,29 @@ class Dashboard extends React.Component {
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.refs.mainContent.scrollTop = 0;
   }
 
   render() {
-    return (
-      <>
-        <NavBar></NavBar>
-        <Sidebar
-          {...this.props}
-          // routes={routes}
-          logo={{
-            innerLink: '/admin/index',
-            imgSrc: require('../assets/img/brand/argon-react.png'),
-            imgAlt: '...'
-          }}
-        />
-        <Job></Job>
-        {/* <Company></Company> */}
-      </>
-    );
+    if (ls.get('token') && ls.get('token') !== undefined) {
+      return (
+        <>
+          <NavBar></NavBar>
+          <Sidebar
+            {...this.props}
+            // routes={routes}
+            // logo={{
+            //   innerLink: '/admin/index',
+            //   imgSrc: require('../assets/img/brand/argon-react.png'),
+            //   imgAlt: '...'
+            // }}
+          />
+          <Job></Job>
+          {/* <Company></Company> */}
+        </>
+      );
+    } else {
+      return <Redirect to="/login" exact></Redirect>;
+    }
   }
 }
 

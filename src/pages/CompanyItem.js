@@ -13,38 +13,42 @@
 // export default Company;
 
 import React from 'react';
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button
-} from 'reactstrap';
+import { Col, Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 
-const CompanyItem = props => {
-  return (
-    <div>
-      <Card>
-        <CardImg
-          top
-          width="100%"
-          src="/assets/318x180.svg"
-          alt="Card image cap"
-        />
-        <CardBody className="mx-auto">
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-    </div>
-  );
-};
+const CompanyItem = props =>
+  props.company.map(company => {
+    return (
+      <div key={company.id.toString()}>
+        <Container className="mt-2">
+          <Col className="mx-auto">
+            <ListGroup className="list-group">
+              <ListGroupItem>
+                {company.name}:<br></br>
+                {company.description}
+                <div>
+                  <Button
+                    className="float-right ml-2"
+                    color="primary"
+                    onClick={e => e.preventDefault()}
+                    size="sm"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    className="float-right ml-2"
+                    color="danger"
+                    // onClick={() => props.deleteButtonHandler(job.id)}
+                    size="sm"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </ListGroupItem>
+            </ListGroup>
+          </Col>
+        </Container>
+      </div>
+    );
+  });
 
 export default CompanyItem;

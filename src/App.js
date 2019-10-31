@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './components/Dashboard';
 import Company from './pages/Company';
+import Logout from './pages/Logout';
 
 import NavBar from './components/NavBar';
 import './assets/vendor/nucleo/css/nucleo.css';
@@ -29,11 +30,12 @@ function App() {
       </Switch> */}
 
       <Switch>
-        <Route path="/" component={Login} exact></Route>
+        <Route path="/" component={Dashboard} exact></Route>
         <Route path="/login" component={Login} exact></Route>
-        <Route path="/register" component={Register} exact></Route>
+        <Route path="/logout" component={Logout}></Route>
+        <Route path="/register" component={Register}></Route>
         <Route path="/dashboard" component={Dashboard} exact></Route>
-        <Route path="/company" component={Company} exact></Route>
+        <Route path="/company" component={Company}></Route>
       </Switch>
     </BrowserRouter>
   );

@@ -83,7 +83,7 @@ class Header extends React.Component {
                       <span className="nav-link-inner--text">Company</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className="nav-link-icon"
                       to="/auth/login"
@@ -92,11 +92,12 @@ class Header extends React.Component {
                       <i className="ni ni-key-25" />
                       <span className="nav-link-inner--text">Add Job</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                   <NavItem>
                     <NavLink
                       className="nav-link-icon"
                       to="/admin/user-profile"
+                      to="/logout"
                       tag={Link}
                     >
                       <i className="ni ni-single-02" />
