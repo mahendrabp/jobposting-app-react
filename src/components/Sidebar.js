@@ -20,6 +20,7 @@ import React from 'react';
 import { NavLink as NavLinkRRD, Link } from 'react-router-dom';
 // nodejs library to set properties for components
 import { PropTypes } from 'prop-types';
+import ls from 'local-storage';
 
 // reactstrap components
 import {
@@ -110,6 +111,33 @@ class Sidebar extends React.Component {
         target: '_blank'
       };
     }
+
+    let addjob;
+    if (ls.get('token') && ls.get('token') !== undefined) {
+      addjob = (
+        <NavLink
+          data-toggle="modal"
+          data-target="#modalFormJob"
+          style={{ cursor: 'pointer' }}
+          tag={Link}
+        >
+          <i className="ni ni-spaceship" />
+          <span>Add Job</span>
+        </NavLink>
+      );
+    } else {
+      addjob = (
+        <NavLink
+          className="nav-link-icon"
+          to="/admin/user-profile"
+          to="/login"
+          tag={Link}
+        >
+          <i className="ni ni-spaceship" />
+          <span className="nav-link-inner--text">Wanna Add Job?</span>
+        </NavLink>
+      );
+    }
     return (
       <Navbar
         className="navbar-vertical fixed-left navbar-light bg-white"
@@ -160,25 +188,23 @@ class Sidebar extends React.Component {
             <h6 className="navbar-heading text-muted">Menu</h6>
             {/* Navigation */}
             <Nav className="mb-md-3" navbar>
+              <NavItem>{addjob}</NavItem>
+
               <NavItem>
                 <NavLink
                   data-toggle="modal"
-                  data-target="#modalFormJob"
+                  data-target="#modalFormCompany"
                   style={{ cursor: 'pointer' }}
                   tag={Link}
                 >
-                  <i className="ni ni-spaceship" />
-                  <span>Add Job</span>
+                  <i className="ni ni-ui-04" />
+                  Add Company
                 </NavLink>
               </NavItem>
+
               <NavItem>
                 <NavLink>
                   <i className="ni ni-palette" />- Will Add Soon -
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <i className="ni ni-ui-04" />- Will Add Soon -
                 </NavLink>
               </NavItem>
             </Nav>

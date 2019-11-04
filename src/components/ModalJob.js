@@ -9,16 +9,16 @@ const ModalJob = props => (
     aria-labelledby="modalFormJobLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalFormJobLabel">
+    <div className="modal-dialog" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="modalFormJobLabel">
             {props.formStatus} Job
           </h5>
           <button
             type="button"
             id="closeModalForm"
-            class="close"
+            className="close"
             data-dismiss="modal"
             aria-label="Close"
           >
@@ -26,7 +26,7 @@ const ModalJob = props => (
           </button>
         </div>
         <form onSubmit={props.onSubmitHandler}>
-          <div class="modal-body">
+          <div className="modal-body">
             <div className="form-group">
               <label for="name">Name Job</label>
               <input
@@ -78,7 +78,7 @@ const ModalJob = props => (
                   <option value="1">{job.category}</option>
                 ))} */}
                 {props.dataCategory.map(dataCategory => (
-                  <option value={Number(dataCategory.id)}>
+                  <option value={Number(dataCategory.id)} key={dataCategory.id}>
                     {dataCategory.category}
                   </option>
                 ))}
@@ -95,7 +95,7 @@ const ModalJob = props => (
                 value={props.company_id}
               >
                 {props.dataCompany.map(dataCompany => (
-                  <option value={Number(dataCompany.id)}>
+                  <option value={Number(dataCompany.id)} key={dataCompany.id}>
                     {dataCompany.name}
                   </option>
                 ))}
@@ -117,19 +117,19 @@ const ModalJob = props => (
             </div>
           </div>
 
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
-              class="btn btn-danger btn-raised"
+              className="btn btn-danger btn-raised"
               data-dismiss="modal"
-              //   onClick={props.cancelButtonHandler}
+              onClick={props.cancelButtonHandler}
             >
               Cancel
             </button>
             <button
               disabled={props.buttonDisabled}
               type="submit"
-              class="btn btn-success btn-raised ml-2"
+              className="btn btn-success btn-raised ml-2"
             >
               Save
             </button>

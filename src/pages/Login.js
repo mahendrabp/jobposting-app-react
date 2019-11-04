@@ -95,7 +95,8 @@ class Login extends Component {
         this.setState({
           isLogin: false,
           buttonDisable: false,
-          message: err.response.data.message
+          message: err.response.data.message,
+          isVisible: true
         });
       });
   };
@@ -128,8 +129,15 @@ class Login extends Component {
   };
 
   render() {
+    let logintoken;
+    if (ls.get('token') && ls.get('token') !== undefined) {
+      logintoken = <Redirect to="/" />;
+    } else {
+      logintoken = <Redirect to="/login" />;
+    }
     return (
       <>
+        {logintoken}
         <Container fluid>
           <div
             style={{

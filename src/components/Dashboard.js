@@ -24,10 +24,10 @@ import { Container } from 'reactstrap';
 
 // core components
 import NavBar from './NavBar';
-import Sidebar from './Sidebar';
+// import Sidebar from './Sidebar';
 import Job from '../pages/Job';
 // import Company from '../pages/Company';
-
+import Footer from './Footer';
 // import routes from 'routes.js';
 
 class Dashboard extends React.Component {
@@ -37,26 +37,18 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    if (ls.get('token') && ls.get('token') !== undefined) {
-      return (
-        <>
-          <NavBar></NavBar>
-          <Sidebar
-            {...this.props}
-            // routes={routes}
-            // logo={{
-            //   innerLink: '/admin/index',
-            //   imgSrc: require('../assets/img/brand/argon-react.png'),
-            //   imgAlt: '...'
-            // }}
-          />
-          <Job></Job>
-          {/* <Company></Company> */}
-        </>
-      );
-    } else {
-      return <Redirect to="/login" exact></Redirect>;
-    }
+    return (
+      <>
+        <NavBar></NavBar>
+
+        <Job></Job>
+        {/* <Company></Company> */}
+        <Footer></Footer>
+      </>
+    );
+    // } else {
+    //   return <Redirect to="/login" exact></Redirect>;
+    // }
   }
 }
 
