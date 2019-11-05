@@ -24,7 +24,6 @@ import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
 
 import ModalCompany from '../components/ModalCompany';
-// import { Container } from '@material-ui/core';
 
 // const Company = props => {
 //   return (

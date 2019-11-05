@@ -225,7 +225,6 @@ import {
 } from 'reactstrap';
 import ls from 'local-storage';
 // import { Button } from '@material-ui/core';
-import color from '@material-ui/core/colors/cyan';
 
 class Header extends React.Component {
   render() {

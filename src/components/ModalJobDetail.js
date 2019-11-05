@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  ListGroup,
-  ListGroupItem,
-  Jumbotron,
-  Button,
-  Row,
-  Col,
-  Container
-} from 'reactstrap';
+import { Jumbotron, Button, Row, Col, Container } from 'reactstrap';
 import Job from '../pages/Job';
 // import { Container } from '@material-ui/core';
 import moment from 'moment';

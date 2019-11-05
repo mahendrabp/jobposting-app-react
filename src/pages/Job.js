@@ -1,28 +1,12 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from 'react';
 import Axios from 'axios';
 import axios from 'axios';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getJobRedux } from '../redux/action/job';
 // reactstrap components
 import {
   FormGroup,
-  Label,
   Input,
   Row,
   Alert,
@@ -31,19 +15,14 @@ import {
   Button,
   InputGroup,
   InputGroupAddon,
-  InputGroupAddonProps,
   InputGroupText,
   Form,
   UncontrolledTooltip,
   Card,
   CardBody,
-  CardImg,
-  CardTitle,
   CardText
 } from 'reactstrap';
 // core components
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 
 import JobItem from './JobItem';
 import Loading from '../components/Loading';
@@ -95,30 +74,91 @@ class Job extends React.Component {
     };
   }
 
-  getJobs = (search, location, limit, page, sortby, orderby) => {
-    let url = `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
-    Axios.get(url)
-      .then(result => {
-        const data = result.data.data.result;
-        console.log(result.data.status);
-        // if (result.res === 404) {
-        //   console.log('err');
-        // }
-        this.setState({
-          data: data,
-          totalPage: result.data.data.infoPage.maxPage,
-          infoPage: result.data.data.infoPage
-        });
-      })
-      .catch(err => {
-        // console.log(err.response.data.status);
-        this.setState({
-          // errMessage: 'err.response.data.message.message',
-          // errStatus: err.response.data.status,
-          data: []
-        });
-      });
-  };
+  // getJobs = (search, location, limit, page, sortby, orderby) => {
+  //   let url = `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
+  //   Axios.get(url)
+  //     .then(result => {
+  //       const data = result.data.data.result;
+  //       console.log(result.data.status);
+
+  //       this.setState({
+  //         data: data,
+  //         totalPage: result.data.data.infoPage.maxPage,
+  //         infoPage: result.data.data.infoPage
+  //       });
+  //     })
+  //     .catch(err => {
+  //       // console.log(err.response.data.status);
+  //       this.setState({
+  //         // errMessage: 'err.response.data.message.message',
+  //         // errStatus: err.response.data.status,
+  //         data: []
+  //       });
+  //     });
+  // };
+
+  // getJobs = async (search, page, limit, location, sortby, orderby) => {
+  //   const result = await this.props.dispatch(
+  //     getJobRedux({
+  //       search: this.state.search,
+  //       page: this.state.page,
+  //       limit: this.state.limit,
+  //       location: this.state.location,
+  //       sortby: this.state.sortby,
+  //       orderby: this.state.orderby
+  //     })
+  //   );
+  //   const data = result.value.data.data.result;
+  //   this.setState({
+  //     data: data,
+  //     totalPage: result.value.data.data.infoPage.maxPage,
+  //     infoPage: result.value.data.data.infoPage
+  //   });
+  //   console.log(data);
+  // };
+
+  // getJobs = (search, page, limit, location, sortby, orderby) => {
+  //   this.props
+  //     .dispatch(
+  //       getJobRedux({
+  //         search: this.state.search,
+  //         page: this.state.page,
+  //         limit: this.state.limit,
+  //         location: this.state.location,
+  //         sortby: this.state.sortby,
+  //         orderby: this.state.orderby
+  //       })
+  //     )
+  //     .then(result => {
+  //       const data = result.value.data.data.result;
+  //       this.setState({
+  //         data: data,
+  //         totalPage: result.value.data.data.infoPage.maxPage,
+  //         infoPage: result.value.data.data.infoPage
+  //       });
+  //     })
+  //     .catch();
+  // };
+
+  async getJobs(
+    search = '',
+    location = '',
+    limit = 5,
+    page = 1,
+    sortby = 'j.updated_at',
+    orderby = 'desc'
+  ) {
+    const result = await this.props.dispatch(
+      getJobRedux(search, location, limit, page, sortby, orderby)
+    );
+    const dataResult = result.value.result.data.data;
+    console.log(result.value.result.data.data.infoPage);
+    this.setState({
+      data: dataResult.result,
+      totalPage: dataResult.infoPage.maxPage,
+      infoPage: dataResult.infoPage
+    });
+  }
 
   dataCategory = () => {
     const url = 'http://localhost:5200/api/v1/categories';
@@ -167,6 +207,7 @@ class Job extends React.Component {
       this.state.sortby,
       this.state.orderby
     );
+
     // this.dataCategory();
     // this.dataCompany();
     // this.inputOnChangeHandler = this.inputOnChangeHandler.bind(this);
@@ -338,7 +379,7 @@ class Job extends React.Component {
         </nav>
       );
     } else {
-      return <div>kosong</div>;
+      return <div></div>;
     }
   };
 
@@ -365,9 +406,9 @@ class Job extends React.Component {
         </div>
       );
     } else if (err === 404) {
-      return <h2 className="h5 text-center">Items not found.</h2>;
+      return <h2 className="h5 text-center">Job Not Found.</h2>;
     } else {
-      return <h2 className="h5 text-center">Items not found.</h2>;
+      return <h2 className="h5 text-center">Job Not Found.</h2>;
     }
   };
 
@@ -642,37 +683,24 @@ class Job extends React.Component {
     });
   };
 
-  render() {
-    let addJobBtn;
+  addJobBtn = () => {
     if (ls.get('token') && ls.get('token') !== undefined) {
-      addJobBtn = (
-        <Input
-          type="button"
+      return (
+        <Button
           data-toggle="modal"
           data-target="#modalFormJob"
           style={{ cursor: 'pointer' }}
           tag={Link}
+          onClick={() => this.addJobClick()}
         >
-          {/* <i className="ni ni-spaceship" />
-          <span>Add Job</span> */}
-          Add Job
-        </Input>
-      );
-    } else {
-      addJobBtn = (
-        <Input
-          type="button"
-          className="nav-link-icon"
-          to="/admin/user-profile"
-          to="/login"
-          tag={Link}
-        >
-          {/* <i className="ni ni-spaceship" />
-          <span className="nav-link-inner--text">Wanna Add Job?</span> */}
-        </Input>
+          <i className="ni ni-spaceship" />
+          <span>Add Job</span>
+        </Button>
       );
     }
+  };
 
+  render() {
     return (
       <>
         <div className="main-content" ref="mainContent">
@@ -853,16 +881,7 @@ class Job extends React.Component {
               <Col md="3">
                 <>
                   <div className="mb-4 d-flex align-items-center ml-5">
-                    <Button
-                      data-toggle="modal"
-                      data-target="#modalFormJob"
-                      style={{ cursor: 'pointer' }}
-                      tag={Link}
-                      onClick={() => this.addJobClick()}
-                    >
-                      <i className="ni ni-spaceship" />
-                      <span>Add Job</span>
-                    </Button>
+                    {this.addJobBtn()}
                   </div>
                   <Card style={{ width: '250px' }}>
                     <CardBody>
@@ -887,8 +906,7 @@ class Job extends React.Component {
               <Col md="9">{this.ifEmptyJobs()}</Col>
             </Row>
           </Container>
-
-          {this.pagination()}
+          <Container className="mt-2">{this.pagination()}</Container>
 
           <ModalJob
             formStatus={this.state.formStatus}
@@ -930,5 +948,9 @@ class Job extends React.Component {
     );
   }
 }
-
-export default Job;
+const mapStateToProps = state => {
+  return {
+    data: state.job
+  };
+};
+export default connect(mapStateToProps)(Job);

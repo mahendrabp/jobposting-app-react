@@ -16,7 +16,6 @@ import Moment from 'react-moment';
 import moment from 'moment';
 import 'moment-timezone';
 import 'moment/locale/id';
-import { Container } from '@material-ui/core';
 
 const JobItem = props =>
   props.job.map(job => {
@@ -113,17 +112,7 @@ const JobItem = props =>
             <CardBody className="mt--5">
               <div className="text-left">
                 <hr className="my-4" />
-                <p>{job.description.substring(0, 230)} ....</p>
-                {/* <p
-                  onClick={() => {
-                    props.handleReadMoreClick(job.id.toString());
-                  }}
-                >
-                  <b>
-                    {' '}
-                    {props.readMore ? 'Show less' : 'Continue reading.....'}
-                  </b>
-                </p> */}
+                <p>{job.description.substring(0, 205)} ....</p>
               </div>
               {}
               {deletebutton}
