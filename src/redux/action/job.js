@@ -34,13 +34,13 @@ import axios from 'axios';
 export const getJobRedux = (
   search = '',
   location = '',
-  limit = 5,
+  limit = 6,
   page = 1,
   sortby = 'j.updated_at',
   orderby = 'desc'
 ) => {
   return {
-    type: 'GET_PRODUCT',
+    type: 'GET_JOB',
     payload: new Promise((resolve, reject) => {
       axios
         .get(

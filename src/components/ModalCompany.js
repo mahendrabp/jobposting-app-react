@@ -50,6 +50,7 @@ const ModalCompany = props => (
                 value={props.description}
                 onChange={props.inputOnChangeHandler}
                 required
+                minLength="100"
               />
             </div>
             <div className="form-group">
@@ -73,6 +74,7 @@ const ModalCompany = props => (
                 name="logo"
                 id="logo"
                 onChange={props.inputFileOnChangeHandler}
+                required
               />
               <small class="text-muted">
                 File must be an image in jpg, jpeg, or png format

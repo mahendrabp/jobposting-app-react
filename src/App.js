@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import { BrowserRouter, Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -11,7 +11,7 @@ import Logout from './pages/Logout';
 import Homepage from './pages/Homepage';
 import store from './redux/store';
 
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
 import './assets/vendor/nucleo/css/nucleo.css';
 import './assets/vendor/@fortawesome/fontawesome-free/css/all.min.css';
 import './assets/scss/argon-dashboard-react.scss';

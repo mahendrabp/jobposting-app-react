@@ -19,9 +19,11 @@ import NavBar from '../components/NavBar';
 
 import Axios from 'axios';
 import axios from 'axios';
-import { Row, Button, Col, Container } from 'reactstrap';
+import { Row, Button, Container, Alert } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
+import { connect } from 'react-redux';
+import { getCompanyRedux } from '../redux/action/company';
 
 import ModalCompany from '../components/ModalCompany';
 
@@ -45,29 +47,37 @@ class Company extends React.Component {
       logo: '',
       description: '',
       formStatus: 'Add',
-      selectedId: []
+      selectedId: [],
+      isError: true,
+      message: '',
+      isVisible: 'false'
     };
   }
 
   componentDidMount() {
-    this.getCompany();
+    // this.getCompany();
+    this.getDataCompany();
   }
 
-  getCompany = () => {
-    let url = `http://localhost:5200/api/v1/companies`;
-    Axios.get(url)
-      .then(response => {
-        // console.log(response.data.data);
-        const data = response.data.data;
-        // console.log(data);
-        this.setState({
-          data: data
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  getDataCompany = () => {
+    this.props.dispatch(getCompanyRedux());
   };
+
+  // getCompany = () => {
+  //   let url = `http://localhost:5200/api/v1/companies`;
+  //   Axios.get(url)
+  //     .then(response => {
+  //       // console.log(response.data.data);
+  //       const data = response.data.data;
+  //       // console.log(data);
+  //       this.setState({
+  //         data: data
+  //       });
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
 
   cancelButtonHandler = e => {
     e.preventDefault();
@@ -83,6 +93,31 @@ class Company extends React.Component {
 
   closeModalForm = () => {
     document.getElementById('closeModalForm').click();
+  };
+
+  onShowAlert = () => {
+    this.setState({ isVisible: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ isVisible: false });
+      }, 3000);
+    });
+  };
+
+  companyAlert = () => {
+    if (!this.state.isError) {
+      return (
+        <Alert
+          color="success"
+          isOpen={this.state.isVisible}
+          style={alertFixed}
+          className="text-center"
+        >
+          {this.state.message}
+        </Alert>
+      );
+    } else if (this.state.isError === '' || this.state.isError === null) {
+      return <div></div>;
+    }
   };
 
   onSubmitHandler = e => {
@@ -120,10 +155,13 @@ class Company extends React.Component {
           logo: '',
           location: '',
           description: '',
-          formStatus: 'Add'
+          formStatus: 'Add',
+          isError: response.data.error,
+          message: response.data.message
         });
-        this.getCompany();
+        this.getDataCompany();
         this.closeModalForm();
+        this.onShowAlert();
       })
       .catch(error => {
         console.log(error);
@@ -153,26 +191,30 @@ class Company extends React.Component {
         let index = companies.findIndex(
           company => company.id === this.state.jobIdSelected
         );
-        let res = response.data.data;
-        console.log(res);
+        // let res = response.data.data;
+        console.log(index);
+        // console.log(response.data.error);
+        // console.log(response.data.message);
 
-        // jobs[index].name = res.nameoke;
-        // jobs[index].description = res.description;
-        // jobs[index].location = res.location;
-        // jobs[index].category_id = res.category_id;
-        // jobs[index].company_id = res.company_id;
-        // jobs[index].salary = res.salary;
+        // companies[index].name = res.name;
+        // companies[index].logo = res.logo;
+        // companies[index].description = res.description;
+        // companies[index].location = res.location;
 
         this.setState({
-          data: companies,
+          // data: companies,
+          name: '',
           description: '',
           logo: '',
           location: '',
-          formStatus: 'Edit'
+          formStatus: 'Edit',
+          isError: response.data.error,
+          message: response.data.message
         });
 
-        this.getCompany();
+        this.getDataCompany();
         this.closeModalForm();
+        this.onShowAlert();
       })
       .catch(err => {
         this.setState({
@@ -192,12 +234,17 @@ class Company extends React.Component {
           companies.splice(index, 1);
           console.log(response);
           this.setState({
-            data: companies
+            // data: companies,
+            isError: response.data.error,
+            message: response.data.message
           });
 
-          this.getCompany();
+          this.getDataCompany();
+          this.onShowAlert();
         })
-        .catch(error => {});
+        .catch(error => {
+          console.log(error);
+        });
     }
   };
 
@@ -226,6 +273,7 @@ class Company extends React.Component {
         {logintoken}
         <NavBar></NavBar>
         <Container>
+          {this.companyAlert()}
           <Row>
             <Button
               data-toggle="modal"
@@ -234,13 +282,13 @@ class Company extends React.Component {
               tag={Link}
             >
               <i className="ni ni-ui-04" />
-              Add Company
+              Tambah Perusahaan
             </Button>
           </Row>
           <Row>
             <CompanyItem
               key={this.state.data.id}
-              company={this.state.data}
+              // company={this.state.data}
               deleteCompany={id => this.deleteCompany(id)}
               editHandler={company => this.editHandler(company)}
               // editButtonHandler={job => this.editButtonHandler(job)}
@@ -274,4 +322,20 @@ class Company extends React.Component {
   }
 }
 
-export default Company;
+const alertFixed = {
+  position: 'fixed',
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  zIndex: '9999',
+  borderRadius: '0px'
+};
+
+const mapStateToProps = state => {
+  return {
+    company: state.company
+  };
+};
+export default connect(mapStateToProps)(Company);
+
+// export default Company;

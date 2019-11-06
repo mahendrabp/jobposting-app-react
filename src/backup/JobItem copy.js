@@ -118,6 +118,7 @@ const JobItem = props =>
                           data-target="#modalFormJobDetail"
                           style={{ cursor: 'pointer' }}
                           onClick={() => props.showButtonHandler(job)}
+                          tag={Link}
                         >
                           <h3>
                             <span>{job.job}</span>

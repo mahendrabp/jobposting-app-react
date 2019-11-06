@@ -1,7 +1,7 @@
 import React from 'react';
 import Axios from 'axios';
 import axios from 'axios';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getJobRedux } from '../redux/action/job';
 // reactstrap components
@@ -47,12 +47,12 @@ class Job extends React.Component {
       jobIdSelected: null,
 
       //for query
-      search: '',
-      location: '',
-      limit: 5,
-      page: 1,
-      sortby: 'j.updated_at',
-      orderby: 'desc',
+      // search: '',
+      // location: '',
+      // limit: 5,
+      // page: 1,
+      // sortby: 'j.updated_at',
+      // orderby: 'desc',
 
       //for add
       selectedId: [],
@@ -61,6 +61,7 @@ class Job extends React.Component {
       salary: '',
       location: '',
       logo: '',
+
       category_id: 1,
       company_id: 1,
       formStatus: 'Add',
@@ -69,11 +70,56 @@ class Job extends React.Component {
       company: '',
       status: '',
       readMore: false,
-      errMessage: '',
-      errStatus: ''
+      isError: true,
+      message: '',
+      isVisible: 'false',
+      locationArray: ['Jakarta', 'Bandung', 'Solo']
     };
   }
 
+  async componentDidMount() {
+    // this.getJobs().then(data => {
+    //   // console.log(data);
+    //   this.setState({
+    //     data
+    //   });
+    // });
+
+    this
+      .getJobs
+      // this.state.search,
+      // this.state.location,
+      // this.state.limit,
+      // this.state.page,
+      // this.state.sortby,
+      // this.state.orderby
+      ();
+
+    this.getData = () => {
+      this.props.dispatch(getJobRedux());
+    };
+  }
+
+  // async getJobs(
+  //   search = '',
+  //   location = '',
+  //   limit = 5,
+  //   page = 1,
+  //   sortby = 'j.updated_at',
+  //   orderby = 'desc'
+  // ) {
+  //   await this.props.dispatch(
+  //     getJobRedux(search, location, limit, page, sortby, orderby)
+  //   );
+  //   this.setState({
+  //     search: search,
+  //     location: location,
+  //     limit: location,
+  //     page: page,
+  //     sortby: sortby,
+  //     orderby: orderby
+  //   });
+  // }
   // getJobs = (search, location, limit, page, sortby, orderby) => {
   //   let url = `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
   //   Axios.get(url)
@@ -97,68 +143,44 @@ class Job extends React.Component {
   //     });
   // };
 
-  // getJobs = async (search, page, limit, location, sortby, orderby) => {
-  //   const result = await this.props.dispatch(
-  //     getJobRedux({
-  //       search: this.state.search,
-  //       page: this.state.page,
-  //       limit: this.state.limit,
-  //       location: this.state.location,
-  //       sortby: this.state.sortby,
-  //       orderby: this.state.orderby
-  //     })
-  //   );
-  //   const data = result.value.data.data.result;
-  //   this.setState({
-  //     data: data,
-  //     totalPage: result.value.data.data.infoPage.maxPage,
-  //     infoPage: result.value.data.data.infoPage
-  //   });
-  //   console.log(data);
-  // };
-
-  // getJobs = (search, page, limit, location, sortby, orderby) => {
-  //   this.props
-  //     .dispatch(
-  //       getJobRedux({
-  //         search: this.state.search,
-  //         page: this.state.page,
-  //         limit: this.state.limit,
-  //         location: this.state.location,
-  //         sortby: this.state.sortby,
-  //         orderby: this.state.orderby
-  //       })
-  //     )
-  //     .then(result => {
-  //       const data = result.value.data.data.result;
-  //       this.setState({
-  //         data: data,
-  //         totalPage: result.value.data.data.infoPage.maxPage,
-  //         infoPage: result.value.data.data.infoPage
-  //       });
-  //     })
-  //     .catch();
-  // };
-
-  async getJobs(
+  getJobs = async (
     search = '',
     location = '',
     limit = 5,
     page = 1,
     sortby = 'j.updated_at',
     orderby = 'desc'
-  ) {
-    const result = await this.props.dispatch(
-      getJobRedux(search, location, limit, page, sortby, orderby)
-    );
-    const dataResult = result.value.result.data.data;
-    console.log(result.value.result.data.data.infoPage);
-    this.setState({
-      data: dataResult.result,
-      totalPage: dataResult.infoPage.maxPage,
-      infoPage: dataResult.infoPage
-    });
-  }
+  ) => {
+    // const result = await this.props.dispatch(
+    //   getJobRedux(search, location, limit, page, sortby, orderby)
+    // );
+    // const dataResult = result.value.result.data.data;
+    // // console.log(result.value.result.data.data.infoPage);
+    // this.setState({
+    //   data: dataResult.result,
+    //   totalPage: dataResult.infoPage.maxPage,
+    //   infoPage: dataResult.infoPage
+    // });
+
+    try {
+      const result = await this.props.dispatch(
+        getJobRedux(search, location, limit, page, sortby, orderby)
+      );
+
+      const dataResult = result.value.result.data.data;
+
+      this.setState({
+        data: dataResult.result,
+        totalPage: dataResult.infoPage.maxPage,
+        infoPage: dataResult.infoPage
+      });
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        data: []
+      }); // TypeError: failed to fetch
+    }
+  };
 
   dataCategory = () => {
     const url = 'http://localhost:5200/api/v1/categories';
@@ -190,29 +212,6 @@ class Job extends React.Component {
         console.log(err);
       });
   };
-
-  componentDidMount() {
-    // this.getJobs().then(data => {
-    //   // console.log(data);
-    //   this.setState({
-    //     data
-    //   });
-    // });
-
-    this.getJobs(
-      this.state.search,
-      this.state.location,
-      this.state.limit,
-      this.state.page,
-      this.state.sortby,
-      this.state.orderby
-    );
-
-    // this.dataCategory();
-    // this.dataCompany();
-    // this.inputOnChangeHandler = this.inputOnChangeHandler.bind(this);
-    // this.onSubmitHandler = this.onSubmitHandler.bind(this);
-  }
 
   componentWillMount() {
     this.dataCategory();
@@ -347,8 +346,9 @@ class Job extends React.Component {
   pagination = () => {
     var totalPage = this.state.totalPage;
     console.log(totalPage);
-    console.log(this.state.data);
+    console.log(this.state.data.length);
     var pageButton = [];
+
     if (this.state.data.length !== 0) {
       for (let i = 1; i <= totalPage; i++) {
         pageButton.push(i);
@@ -406,9 +406,9 @@ class Job extends React.Component {
         </div>
       );
     } else if (err === 404) {
-      return <h2 className="h5 text-center">Job Not Found.</h2>;
+      return <h2 className="h5 text-center">Pekerjaan tidak ditemukan.</h2>;
     } else {
-      return <h2 className="h5 text-center">Job Not Found.</h2>;
+      return <h2 className="h5 text-center">Pekerjaan tidak ditemukan.</h2>;
     }
   };
 
@@ -416,12 +416,12 @@ class Job extends React.Component {
     let data = [...this.state.data];
     if (data.length !== 0) {
       return (
-        <Alert color="success">
-          {this.state.infoPage.totalAllJob} Job Found !!!
+        <Alert color="primary">
+          {this.state.infoPage.totalAllJob} Pekerjaan ditemukan !!!
         </Alert>
       );
     } else {
-      return <Alert color="danger">Job Not Found !!!</Alert>;
+      return <Alert color="danger">Pekerjaan tidak ditemukan !!!</Alert>;
     }
   };
 
@@ -484,12 +484,40 @@ class Job extends React.Component {
   //   document.scrollingElement.scrollTop = 0;
   //   this.refs.mainContent.scrollTop = 0;
   // }
+  onShowAlert = () => {
+    this.setState({ isVisible: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ isVisible: false });
+      }, 3000);
+    });
+  };
+
+  jobAlert = () => {
+    if (!this.state.isError) {
+      return (
+        <Alert
+          color="success"
+          isOpen={this.state.isVisible}
+          style={alertFixed}
+          className="text-center"
+        >
+          {this.state.message}
+        </Alert>
+      );
+    } else if (this.state.isError === '' || this.state.isError === null) {
+      return <div></div>;
+    }
+  };
+
   addJob = (url, payload) => {
     axios
       .post(url, payload)
       .then(response => {
-        // console.log(response);
+        console.log(response.data.error);
+        console.log(response.data.message);
         var job = [...this.state.data];
+        var isError = response.data.error;
+        var message = response.data.message;
         console.log(job);
         job.push(response.data.data); //sebelumya data.data.result
         // console.log(response.data.data);
@@ -501,7 +529,10 @@ class Job extends React.Component {
           category_id: '',
           company_id: '',
           salary: '',
-          formStatus: 'Add'
+          formStatus: 'Add',
+          isError: isError,
+          message: message,
+          isVisible: true
         });
         this.getJobs(
           this.state.search,
@@ -512,41 +543,39 @@ class Job extends React.Component {
           this.state.orderby
         );
         this.closeModalForm();
+        this.onShowAlert();
       })
       .catch(error => {
         console.log(error);
-        this.setState({
-          buttonDisabled: false
-        });
       });
   };
 
-  addJobInvalid = () => {
-    if (this.state.status === 200) {
-      return (
-        <Alert
-          color="danger"
-          isOpen={this.state.visible}
-          toggle={this.onDismiss}
-        >
-          {this.state.message}
-        </Alert>
-      );
-    } else {
-      return (
-        <>
-          <Alert
-            color="success"
-            isOpen={this.state.visible}
-            toggle={this.onDismiss}
-          >
-            {this.state.message}
-          </Alert>
-          <Redirect to="/dashboard" />
-        </>
-      );
-    }
-  };
+  // addJobInvalid = () => {
+  //   if (this.state.status === 200) {
+  //     return (
+  //       <Alert
+  //         color="danger"
+  //         isOpen={this.state.visible}
+  //         toggle={this.onDismiss}
+  //       >
+  //         {this.state.message}
+  //       </Alert>
+  //     );
+  //   } else {
+  //     return (
+  //       <>
+  //         <Alert
+  //           color="success"
+  //           isOpen={this.state.visible}
+  //           toggle={this.onDismiss}
+  //         >
+  //           {this.state.message}
+  //         </Alert>
+  //         <Redirect to="/dashboard" />
+  //       </>
+  //     );
+  //   }
+  // };
 
   addJobClick = () => {
     this.setState({
@@ -564,9 +593,11 @@ class Job extends React.Component {
     Axios.patch(url, payload)
       .then(response => {
         let jobs = [...this.state.data];
-        let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
+        // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
+        // let res = response.data.data.result;
+        jobs.findIndex(job => job.id === this.state.jobIdSelected);
         let res = response.data.data.result;
-        console.log(res);
+        console.log(response);
 
         // jobs[index].name = res.nameoke;
         // jobs[index].description = res.description;
@@ -583,7 +614,9 @@ class Job extends React.Component {
           location: '',
           category_id: 1,
           company_id: 1,
-          formStatus: 'Add'
+          formStatus: 'Add',
+          isError: response.data.error,
+          message: response.data.message
         });
 
         this.getJobs(
@@ -595,6 +628,7 @@ class Job extends React.Component {
           this.state.orderby
         );
         this.closeModalForm();
+        this.onShowAlert();
       })
       .catch(err => {
         this.setState({
@@ -647,12 +681,16 @@ class Job extends React.Component {
         .then(response => {
           var jobs = [...this.state.data];
           var index = jobs.findIndex(job => job.id === id);
-          console.log(jobs);
+          // console.log(jobs);
           console.log(response);
-          console.log(index);
+          // console.log(index);
           jobs.splice(index, 1);
           console.log(jobs);
-          this.setState({ data: jobs });
+          this.setState({
+            data: jobs,
+            isError: response.data.error,
+            message: response.data.message
+          });
           this.getJobs(
             this.state.search,
             this.state.location,
@@ -661,6 +699,7 @@ class Job extends React.Component {
             this.state.sortby,
             this.state.orderby
           );
+          this.onShowAlert();
         })
         .catch(error => {
           console.log(error.response);
@@ -694,7 +733,7 @@ class Job extends React.Component {
           onClick={() => this.addJobClick()}
         >
           <i className="ni ni-spaceship" />
-          <span>Add Job</span>
+          <span>Tambah Pekerjaan</span>
         </Button>
       );
     }
@@ -705,6 +744,7 @@ class Job extends React.Component {
       <>
         <div className="main-content" ref="mainContent">
           <Container>
+            {this.jobAlert()}
             <Row className="mb-4"></Row>
             <Form size="lg">
               <Row>
@@ -720,7 +760,7 @@ class Job extends React.Component {
                         type="search"
                         name="search"
                         id="search"
-                        placeholder="search Job"
+                        placeholder="Cari Pekerjaan"
                         className="form-control"
                         value={this.state.search}
                         onChange={this.getSearch}
@@ -734,7 +774,7 @@ class Job extends React.Component {
                     placement="top"
                     target="tooltip611234743"
                   >
-                    Search Job Here
+                    Cari Pekerjaan
                   </UncontrolledTooltip>
                 </Col>
 
@@ -745,7 +785,7 @@ class Job extends React.Component {
                         type="location"
                         name="location"
                         id="location"
-                        placeholder="search city"
+                        placeholder="Cari Kota"
                         className="form-control"
                         value={this.state.location}
                         onChange={this.getLocation}
@@ -764,7 +804,7 @@ class Job extends React.Component {
                     placement="top"
                     target="tooltip611234744"
                   >
-                    Search City Here
+                    Cari Kota
                   </UncontrolledTooltip>
                 </Col>
 
@@ -781,7 +821,7 @@ class Job extends React.Component {
                         id="tooltip611234745"
                       >
                         <option value="" disabled>
-                          Select show Job Per page
+                          Tampilan banyak kerja per halaman
                         </option>
 
                         <option value="5">5</option>
@@ -796,7 +836,7 @@ class Job extends React.Component {
                     placement="top"
                     target="tooltip611234745"
                   >
-                    Show how many job per page
+                    Tampilan banyak kerja per halaman
                   </UncontrolledTooltip>
                 </Col>
                 <Col md="1">
@@ -817,13 +857,13 @@ class Job extends React.Component {
                         id="tooltip611234746"
                       >
                         <option value="" disabled>
-                          Select Sort By
+                          Sortir berdasarkan
                         </option>
                         {/* <option value="updated_at">Sort By : </option> */}
 
-                        <option value="name">Name</option>
-                        <option value="category">Category</option>
-                        <option value="updated_at">Newest</option>
+                        <option value="name">Pekerjaan</option>
+                        <option value="category">Kategori</option>
+                        <option value="updated_at">Terbaru</option>
                       </Input>
                     </InputGroup>
                   </FormGroup>
@@ -832,7 +872,7 @@ class Job extends React.Component {
                     placement="top"
                     target="tooltip611234746"
                   >
-                    Sort result job by Name, Category or Newest update
+                    Sortir berdasarkan nama, kategory, atau kerja update terbaru
                   </UncontrolledTooltip>
                 </Col>
                 <Col md="1">
@@ -853,7 +893,7 @@ class Job extends React.Component {
                         id="tooltip611234747"
                       >
                         <option value="asc" disabled>
-                          Order by :{' '}
+                          Urutkan berdasarkan :{' '}
                         </option>
                         <option value="asc">A to Z</option>
                         <option value="desc">Z to A</option>
@@ -865,7 +905,7 @@ class Job extends React.Component {
                     placement="top"
                     target="tooltip611234747"
                   >
-                    Order Low to High or vice versa
+                    Urutkan dari kecil ke besar dan sebaliknya
                   </UncontrolledTooltip>
                 </Col>
               </Row>
@@ -885,20 +925,28 @@ class Job extends React.Component {
                   </div>
                   <Card style={{ width: '250px' }}>
                     <CardBody>
-                      <CardText>PICK LOCATION</CardText>
-                      <div className="custom-control custom-checkbox mb-3">
-                        <input
-                          className="custom-control-input"
-                          id="customCheck1"
-                          type="checkbox"
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="customCheck1"
-                        >
-                          Jakarta
-                        </label>
-                      </div>
+                      <CardText>
+                        <span>Pilih Lokasi</span>
+                        <br></br>
+                        <span>-tahap pengembangan-</span>
+                      </CardText>
+                      {this.state.locationArray.map((v, i) => (
+                        <div className="custom-control custom-checkbox mb-3">
+                          <input
+                            className="custom-control-input"
+                            id="check"
+                            type="checkbox"
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="check"
+                            key={v}
+                          >
+                            {' '}
+                            {v}
+                          </label>
+                        </div>
+                      ))}
                     </CardBody>
                   </Card>
                 </>
@@ -919,7 +967,7 @@ class Job extends React.Component {
             company_id={this.state.company_id}
             salary={this.state.salary}
             job={this.state.data}
-            addJobInvalid={this.addJobInvalid}
+            // addJobInvalid={this.addJobInvalid}
             dataCategory={this.state.dataCategory}
             dataCompany={this.state.dataCompany}
             cancelButtonHandler={this.cancelButtonHandler}
@@ -938,7 +986,8 @@ class Job extends React.Component {
             updated_at={this.state.updated_at}
             logo={this.state.logo}
             job={this.state.data}
-            addJobInvalid={this.addJobInvalid}
+            // addJobInvalid={this.addJobInvalid}
+
             dataCategory={this.state.dataCategory}
             dataCompany={this.state.dataCompany}
             cancelButtonHandler={this.cancelButtonHandler}
@@ -948,6 +997,15 @@ class Job extends React.Component {
     );
   }
 }
+
+const alertFixed = {
+  position: 'fixed',
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  zIndex: '9999',
+  borderRadius: '0px'
+};
 const mapStateToProps = state => {
   return {
     data: state.job

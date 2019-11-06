@@ -24,7 +24,6 @@ import ls from 'local-storage';
 import {
   Button,
   Card,
-  CardHeader,
   Alert,
   CardBody,
   FormGroup,
@@ -138,15 +137,9 @@ class Login extends Component {
     return (
       <>
         {logintoken}
-        <Container fluid>
-          <div
-            style={{
-              marginRight: '-400px',
-              marginLeft: '500px',
-              marginTop: '40px'
-            }}
-          >
-            <Col lg="5" md="7">
+        <Container className="pt-lg-md">
+          <Row className="justify-content-center mt-7">
+            <Col lg="5">
               <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
@@ -208,15 +201,15 @@ class Login extends Component {
                 </CardBody>
               </Card>
               <Row className="mt-3">
-                <Col className="text-right" xs="6">
+                <Col className="text-justify-center" xs="6">
+                  <div>Don't have an account?</div>
                   <div>
-                    Don't have an account?{' '}
                     <Link to="/register"> Register Here</Link>{' '}
                   </div>
                 </Col>
               </Row>
             </Col>
-          </div>
+          </Row>
         </Container>
       </>
     );

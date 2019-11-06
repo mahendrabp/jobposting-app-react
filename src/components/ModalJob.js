@@ -28,7 +28,7 @@ const ModalJob = props => (
         <form onSubmit={props.onSubmitHandler}>
           <div className="modal-body">
             <div className="form-group">
-              <label for="name">Name Job</label>
+              <label for="name">Nama Pekerjaan</label>
               <input
                 type="text"
                 name="name"
@@ -41,7 +41,7 @@ const ModalJob = props => (
             </div>
 
             <div className="form-group">
-              <label for="description">Description</label>
+              <label for="description">Diskripsi</label>
               <input
                 type="text"
                 name="description"
@@ -50,10 +50,11 @@ const ModalJob = props => (
                 value={props.description}
                 onChange={props.inputOnChangeHandler}
                 required
+                minLength="100"
               />
             </div>
             <div className="form-group">
-              <label for="location">Location</label>
+              <label for="location">Lokasi</label>
               <input
                 type="text"
                 name="location"
@@ -66,7 +67,7 @@ const ModalJob = props => (
             </div>
 
             <div className="form-group">
-              <label for="category_id">Category</label>
+              <label for="category_id">Kategori</label>
               <select
                 name="category_id"
                 id="category_id"
@@ -86,7 +87,7 @@ const ModalJob = props => (
             </div>
 
             <div className="form-group">
-              <label for="company_id">Company</label>
+              <label for="company_id">Perusahaan</label>
               <select
                 name="company_id"
                 id="company_id"
@@ -104,7 +105,7 @@ const ModalJob = props => (
             </div>
 
             <div className="form-group">
-              <label for="salary">Salary</label>
+              <label for="salary">Gaji</label>
               <input
                 type="number"
                 name="salary"
@@ -124,14 +125,14 @@ const ModalJob = props => (
               data-dismiss="modal"
               onClick={props.cancelButtonHandler}
             >
-              Cancel
+              Batal
             </button>
             <button
               disabled={props.buttonDisabled}
               type="submit"
               className="btn btn-success btn-raised ml-2"
             >
-              Save
+              Simpan
             </button>
           </div>
 

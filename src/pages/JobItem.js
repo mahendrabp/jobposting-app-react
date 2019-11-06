@@ -7,12 +7,11 @@ import {
   CardBody,
   Row,
   Col,
-  Link,
   NavLink
 } from 'reactstrap';
 import './styles.css';
 import ls from 'local-storage';
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 import moment from 'moment';
 import 'moment-timezone';
 import 'moment/locale/id';
@@ -61,7 +60,7 @@ const JobItem = props =>
               <Row className="justify-content-center">
                 <Col md="4">
                   <div className="card-profile-image mt-4">
-                    <a onClick={e => e.preventDefault()}>
+                    <a href="" onClick={e => e.preventDefault()}>
                       <img
                         alt="..."
                         // src={require('http://localhost:5200/public/logo' +
@@ -123,12 +122,12 @@ const JobItem = props =>
     );
   });
 
-const logoStyle = {
-  position: 'relative',
-  overflow: 'hidden',
-  position: 'absolute',
-  width: '200px',
-  height: '200px'
-};
+// const logoStyle = {
+//   position: 'relative',
+//   overflow: 'hidden',
+//   position: 'absolute',
+//   width: '200px',
+//   height: '200px'
+// };
 
 export default JobItem;

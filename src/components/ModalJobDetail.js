@@ -1,6 +1,6 @@
 import React from 'react';
-import { Jumbotron, Button, Row, Col, Container } from 'reactstrap';
-import Job from '../pages/Job';
+import { Jumbotron, Row, Col, Container } from 'reactstrap';
+// import Job from '../pages/Job';
 // import { Container } from '@material-ui/core';
 import moment from 'moment';
 import 'moment-timezone';
@@ -106,16 +106,15 @@ const ModalJobDetail = props => (
   </div>
 );
 
-const fullScreeModal = {
-  width: '100%',
-  height: '100%',
-  margin: '0',
-  top: '0',
-  left: '0'
-};
+// const fullScreeModal = {
+//   width: '100%',
+//   height: '100%',
+//   margin: '0',
+//   top: '0',
+//   left: '0'
+// };
 
 const squareLogo = {
-  position: 'relative',
   overflow: 'hidden',
   position: 'absolute'
 };

@@ -254,30 +254,25 @@ class Header extends React.Component {
             id="navbar-primary_dropdown_1"
           >
             <span style={spanStyle} className="nav-link-inner--text">
-              Profile
+              Profil
             </span>
           </NavLink>
           <DropdownMenu aria-labelledby="navbar-primary_dropdown_1" right>
             <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-              Edit Profile -coming soon-
+              Edit Profil -tahap pengembangan-
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem tag={Link} to="/logout">
-              Logout
+              Keluar
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
       );
     } else {
       loginlogout = (
-        <NavLink
-          className="nav-link-icon"
-          to="/admin/user-profile"
-          to="/login"
-          tag={Link}
-        >
+        <NavLink className="nav-link-icon" to="/login" tag={Link}>
           <Button color="primary" type="button">
-            Login
+            Masuk
           </Button>
         </NavLink>
       );
@@ -288,7 +283,7 @@ class Header extends React.Component {
       company = (
         <NavLink className="nav-link-icon mt-2" to="/company" tag={Link}>
           <span style={spanStyle} className="nav-link-inner--text">
-            Company
+            Perusahaan
           </span>
         </NavLink>
       );
@@ -296,7 +291,7 @@ class Header extends React.Component {
       company = (
         <NavLink className="nav-link-icon mt-2" to="/login" tag={Link}>
           <span style={spanStyle} className="nav-link-inner--text">
-            Login to see Company
+            Masuk untuk lihat Perusahaan
           </span>
         </NavLink>
       );
@@ -309,7 +304,7 @@ class Header extends React.Component {
       signup = (
         <NavLink className="nav-link-icon" to="/register" tag={Link}>
           <Button color="info" type="button">
-            Register
+            Daftar
           </Button>
         </NavLink>
       );
@@ -318,7 +313,7 @@ class Header extends React.Component {
     return (
       <Navbar
         style={navbarStyle}
-        className="navbar-horizontal navbar-dark bg-white"
+        className="navbar-horizontal navbar-dark bg-white navbar-fixed-top"
         expand="md"
       >
         <Container>
@@ -386,7 +381,10 @@ class Header extends React.Component {
   }
 }
 const navbarStyle = {
-  padding: '0px 20px'
+  padding: '0px 20px',
+  position: 'overflow',
+  top: '0px',
+  left: '0px'
 };
 const spanStyle = {
   fontSize: '16px',
