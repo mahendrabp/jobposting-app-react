@@ -1,24 +1,8 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { Component } from 'react';
 import Axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
+import backgroundImage from '../assets/img/icons/common/4.svg';
 
 // reactstrap components
 import {
@@ -53,7 +37,7 @@ class Login extends Component {
   }
 
   onDismiss() {
-    this.setState({ visible: false });
+    this.setState({ visible: false, isLogin: '' });
   }
 
   handleChange = e => {
@@ -73,19 +57,21 @@ class Login extends Component {
       .then(res => {
         var dataResponse = res.data;
         let success = dataResponse.status;
-        console.log(res.config.data);
+        console.log(res);
         if (success === 200) {
           ls.set('token', dataResponse.token);
           // ls.set('email', dataResponse.email);
           this.setState({
             isLogin: true,
             buttonDisable: true,
-            message: dataResponse.message
+            message: dataResponse.message,
+            visible: true
           });
         } else {
           this.setState({
             isLogin: false,
-            buttonDisable: false
+            buttonDisable: false,
+            visible: true
           });
         }
       })
@@ -95,7 +81,7 @@ class Login extends Component {
           isLogin: false,
           buttonDisable: false,
           message: err.response.data.message,
-          isVisible: true
+          visible: true
         });
       });
   };
@@ -121,7 +107,7 @@ class Login extends Component {
           >
             {this.state.message}
           </Alert>
-          <Redirect to="/dashboard" />
+          <Redirect to="/dashboard" />;
         </>
       );
     }
@@ -137,83 +123,105 @@ class Login extends Component {
     return (
       <>
         {logintoken}
-        <Container className="pt-lg-md">
-          <Row className="justify-content-center mt-7">
-            <Col lg="5">
-              <Card className="bg-secondary shadow border-0">
-                <CardBody className="px-lg-5 py-lg-5">
-                  <div className="text-center text-muted mb-4">
-                    <h2>sign in with credentials</h2>
-                  </div>
-                  <Form onSubmit={this.onSubmitHandler}>
-                    <FormGroup className="mb-3">
-                      <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-email-83" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="text"
-                          name="email"
-                          placeholder="email..."
-                          value={this.state.email}
-                          onChange={this.handleChange}
-                        ></Input>
-                      </InputGroup>
-                    </FormGroup>
-
-                    <FormGroup>
-                      <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="ni ni-lock-circle-open" />
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input
-                          type="password"
-                          name="password"
-                          placeholder="password..."
-                          value={this.state.password}
-                          onChange={this.handleChange}
-                        ></Input>
-                      </InputGroup>
-                    </FormGroup>
-
-                    <div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
-                        className="custom-control-input"
-                        id=" customCheckLogin"
-                        type="checkbox"
-                      />
+        <div>
+          <Container
+            className="pt-lg-md"
+            // style={{ backgroundImage: `url(${backgroundImage})` }}
+            style={bgImage}
+          >
+            <Row className="justify-content-center mt-7">
+              <Col lg="5">
+                <Card className="bg-secondary shadow border-0">
+                  <CardBody className="px-lg-5 py-lg-5">
+                    <div className="text-center text-muted mb-4">
+                      <h2>Masuk dengan email</h2>
                     </div>
-
-                    <div className="text-center">
-                      <FormGroup>
-                        <Button color="success"> Login </Button>
+                    <Form onSubmit={this.onSubmitHandler}>
+                      <FormGroup className="mb-3">
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-email-83" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            value={this.state.email}
+                            onChange={this.handleChange}
+                          ></Input>
+                        </InputGroup>
                       </FormGroup>
-                    </div>
 
-                    <Col>
-                      <div>{this.loginInvalid()}</div>
-                    </Col>
-                  </Form>
-                </CardBody>
-              </Card>
-              <Row className="mt-3">
-                <Col className="text-justify-center" xs="6">
+                      <FormGroup>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="ni ni-lock-circle-open" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                          ></Input>
+                        </InputGroup>
+                      </FormGroup>
+
+                      <div className="custom-control custom-control-alternative custom-checkbox">
+                        <input
+                          className="custom-control-input"
+                          id=" customCheckLogin"
+                          type="checkbox"
+                        />
+                      </div>
+
+                      <div className="text-center">
+                        <FormGroup>
+                          <Button color="primary"> Login </Button>
+                        </FormGroup>
+                      </div>
+
+                      <Col>
+                        <div>{this.loginInvalid()}</div>
+                      </Col>
+                    </Form>
+                  </CardBody>
+                </Card>
+
+                {/* <Col className="text-justify-center" xs="6">
                   <div>Don't have an account?</div>
                   <div>
                     <Link to="/register"> Register Here</Link>{' '}
                   </div>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
+                </Col> */}
+                <p className="mt-4">
+                  Belum punya akun?{' '}
+                  <Link
+                    className="btn btn-link pl-1 text-capitalize"
+                    to="/register"
+                    exact
+                  >
+                    Daftar disini
+                  </Link>
+                </p>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </>
     );
   }
 }
+
+const bgImage = {
+  backgroundSize: 'contain',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundImage: `url(${backgroundImage})`
+};
 
 export default Login;

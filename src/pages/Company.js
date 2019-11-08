@@ -193,11 +193,12 @@ class Company extends React.Component {
         );
         // let res = response.data.data;
         console.log(index);
+        console.log(this.logo);
         // console.log(response.data.error);
         // console.log(response.data.message);
 
         // companies[index].name = res.name;
-        // companies[index].logo = res.logo;
+        // companies[index].logo = response.logo;
         // companies[index].description = res.description;
         // companies[index].location = res.location;
 
@@ -218,6 +219,7 @@ class Company extends React.Component {
       })
       .catch(err => {
         this.setState({
+          logo: '',
           formStatus: 'Add'
         });
       });
@@ -254,11 +256,23 @@ class Company extends React.Component {
     });
   };
 
+  // inputFileOnChangeHandler = e => {
+  //   console.log(e.target.files[0]);
+  //   this.setState({
+  //     logo: e.target.files[0]
+  //   });
+  // };
+
   inputFileOnChangeHandler = e => {
     console.log(e.target.files[0]);
-    this.setState({
-      logo: e.target.files[0]
-    });
+    if (
+      typeof e.target.files[0] !== 'undefined' ||
+      e.target.files[0] == e.target.files[0]
+    ) {
+      this.setState({
+        logo: e.target.files[0]
+      });
+    }
   };
 
   render() {
@@ -274,15 +288,15 @@ class Company extends React.Component {
         <NavBar></NavBar>
         <Container>
           {this.companyAlert()}
-          <Row>
+          <Row className="d-flex justify-content-center mt-2">
             <Button
               data-toggle="modal"
               data-target="#modalFormCompany"
               style={{ cursor: 'pointer' }}
               tag={Link}
             >
-              <i className="ni ni-ui-04" />
-              Tambah Perusahaan
+              <i className="ni ni-fat-add" />
+              <span>Tambah Perusahaan</span>
             </Button>
           </Row>
           <Row>

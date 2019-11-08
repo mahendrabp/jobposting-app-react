@@ -1,5 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-const Loading = () => <p>Loading...</p>
+const Loading = () => (
+  <p>
+    <Skeleton />
+    <Skeleton count={5} />
+  </p>
+);
 
-export default Loading
+export default Loading;

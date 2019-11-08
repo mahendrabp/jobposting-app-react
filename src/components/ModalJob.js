@@ -1,4 +1,6 @@
 import React from 'react';
+import { Input } from 'reactstrap';
+import { connect } from 'react-redux';
 
 const ModalJob = props => (
   <div
@@ -42,11 +44,10 @@ const ModalJob = props => (
 
             <div className="form-group">
               <label for="description">Diskripsi</label>
-              <input
-                type="text"
+              <Input
+                type="textarea"
                 name="description"
                 id="description"
-                className="form-control"
                 value={props.description}
                 onChange={props.inputOnChangeHandler}
                 required
@@ -100,7 +101,6 @@ const ModalJob = props => (
                     {dataCompany.name}
                   </option>
                 ))}
-                {/* <option value="1">1</option> */}
               </select>
             </div>
 
@@ -135,7 +135,7 @@ const ModalJob = props => (
               Simpan
             </button>
           </div>
-
+          <div>{console.log(props.company.company)}</div>
           {props.addJobInvalid}
         </form>
       </div>
@@ -143,4 +143,9 @@ const ModalJob = props => (
   </div>
 );
 
-export default ModalJob;
+const mapStateToProps = state => ({
+  company: state.company
+});
+export default connect(mapStateToProps)(ModalJob);
+
+// export default ModalJob;

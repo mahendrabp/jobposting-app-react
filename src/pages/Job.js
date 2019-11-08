@@ -3,7 +3,8 @@ import Axios from 'axios';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getJobRedux } from '../redux/action/job';
+import { getJobRedux, deleteJobRedux } from '../redux/action/job';
+import { pushJobRedux } from '../redux/action/job';
 // reactstrap components
 import {
   FormGroup,
@@ -72,8 +73,9 @@ class Job extends React.Component {
       readMore: false,
       isError: true,
       message: '',
-      isVisible: 'false',
+      isVisible: false,
       locationArray: ['Jakarta', 'Bandung', 'Solo']
+      // getToken: false
     };
   }
 
@@ -85,19 +87,22 @@ class Job extends React.Component {
     //   });
     // });
 
-    this
-      .getJobs
-      // this.state.search,
-      // this.state.location,
-      // this.state.limit,
-      // this.state.page,
-      // this.state.sortby,
-      // this.state.orderby
-      ();
+    // this
+    //   .getJobs
+    //   // this.state.search,
+    //   // this.state.location,
+    //   // this.state.limit,
+    //   // this.state.page,
+    //   // this.state.sortby,
+    //   // this.state.orderby
+    //   ();
+    this.getJobs();
+    this.dataCategory();
+    this.dataCompany();
 
-    this.getData = () => {
-      this.props.dispatch(getJobRedux());
-    };
+    // this.getData = () => {
+    //   this.props.dispatch(getJobRedux());
+    // };
   }
 
   // async getJobs(
@@ -170,9 +175,9 @@ class Job extends React.Component {
       const dataResult = result.value.result.data.data;
 
       this.setState({
-        data: dataResult.result,
-        totalPage: dataResult.infoPage.maxPage,
-        infoPage: dataResult.infoPage
+        data: dataResult.result
+        // totalPage: dataResult.infoPage.maxPage,
+        // infoPage: dataResult.infoPage
       });
     } catch (err) {
       console.log(err);
@@ -213,11 +218,6 @@ class Job extends React.Component {
       });
   };
 
-  componentWillMount() {
-    this.dataCategory();
-    this.dataCompany();
-  }
-
   getSort = e => {
     e.preventDefault();
     let sortby = e.target.value;
@@ -225,12 +225,12 @@ class Job extends React.Component {
       sortby
     });
     this.getJobs(
-      this.state.search,
-      this.state.location,
-      this.state.limit,
-      this.state.page,
+      this.props.job.search,
+      this.props.job.location,
+      this.props.job.limit,
+      this.props.job.page,
       sortby,
-      this.state.orderby
+      this.props.job.orderby
     );
   };
 
@@ -241,11 +241,11 @@ class Job extends React.Component {
       orderby
     });
     this.getJobs(
-      this.state.search,
-      this.state.location,
-      this.state.limit,
-      this.state.page,
-      this.state.sortby,
+      this.props.job.search,
+      this.props.job.location,
+      this.props.job.limit,
+      this.props.job.page,
+      this.props.job.sortby,
       orderby
     );
   };
@@ -264,20 +264,20 @@ class Job extends React.Component {
 
       this.getJobs(
         search,
-        this.state.location,
-        this.state.limit,
-        this.state.page,
-        this.state.sortby,
-        this.state.orderby
+        this.props.job.location,
+        this.props.job.limit,
+        this.props.job.page,
+        this.props.job.sortby,
+        this.props.job.orderby
       );
     } else {
       this.getJobs(
         '',
-        this.state.location,
-        this.state.limit,
-        this.state.page,
-        this.state.sortby,
-        this.state.orderby
+        this.props.job.location,
+        this.props.job.limit,
+        this.props.job.page,
+        this.props.job.sortby,
+        this.props.job.orderby
       );
     }
   };
@@ -293,21 +293,21 @@ class Job extends React.Component {
         page: 1
       });
       this.getJobs(
-        this.state.search,
+        this.props.job.search,
         location,
-        this.state.limit,
-        this.state.page,
-        this.state.sortby,
-        this.state.orderby
+        this.props.job.limit,
+        this.props.job.page,
+        this.props.job.sortby,
+        this.props.job.orderby
       );
     } else {
       this.getJobs(
-        this.state.search,
+        this.props.job.search,
         '',
-        this.state.limit,
-        this.state.page,
-        this.state.sortby,
-        this.state.orderby
+        this.props.job.limit,
+        this.props.job.page,
+        this.props.job.sortby,
+        this.props.job.orderby
       );
     }
   };
@@ -320,12 +320,12 @@ class Job extends React.Component {
       limit
     });
     this.getJobs(
-      this.state.search,
-      this.state.location,
+      this.props.job.search,
+      this.props.job.location,
       limit,
       1,
-      this.state.sortby,
-      this.state.orderby
+      this.props.job.sortby,
+      this.props.job.orderby
     );
   };
 
@@ -334,17 +334,17 @@ class Job extends React.Component {
       page
     });
     this.getJobs(
-      this.state.search,
-      this.state.location,
-      this.state.limit,
+      this.props.job.search,
+      this.props.job.location,
+      this.props.job.limit,
       page,
-      this.state.sortby,
-      this.state.orderby
+      this.props.job.sortby,
+      this.props.job.orderby
     );
   };
 
   pagination = () => {
-    var totalPage = this.state.totalPage;
+    var totalPage = this.props.job.totalPage;
     console.log(totalPage);
     console.log(this.state.data.length);
     var pageButton = [];
@@ -392,7 +392,7 @@ class Job extends React.Component {
         <div class="row">
           {data !== '' && data !== [] && data !== null && data !== 0 ? (
             <JobItem
-              job={this.state.data}
+              // job={this.state.data}
               readMore={this.state.readMore}
               handleReadMoreClick={this.handleReadMoreClick}
               selected={this.state.selectedId}
@@ -417,7 +417,7 @@ class Job extends React.Component {
     if (data.length !== 0) {
       return (
         <Alert color="primary">
-          {this.state.infoPage.totalAllJob} Pekerjaan ditemukan !!!
+          {this.props.job.infoPage.totalAllJob} Pekerjaan ditemukan !!!
         </Alert>
       );
     } else {
@@ -513,16 +513,21 @@ class Job extends React.Component {
     axios
       .post(url, payload)
       .then(response => {
-        console.log(response.data.error);
-        console.log(response.data.message);
-        var job = [...this.state.data];
+        // console.log(response.data.error);
+        // console.log(response.data.message);
+        // var job = [...this.state.data];
         var isError = response.data.error;
         var message = response.data.message;
+        var job = response.data.data;
         console.log(job);
-        job.push(response.data.data); //sebelumya data.data.result
+        console.log(response.data.data);
+        // job.push(response.data.data); //sebelumya data.data.result
         // console.log(response.data.data);
+
+        this.props.dispatch(pushJobRedux(job));
+
         this.setState({
-          data: job,
+          // data: job,
           name: '',
           description: '',
           location: '',
@@ -534,14 +539,7 @@ class Job extends React.Component {
           message: message,
           isVisible: true
         });
-        this.getJobs(
-          this.state.search,
-          this.state.location,
-          this.state.limit,
-          this.state.page,
-          this.state.sortby,
-          this.state.orderby
-        );
+        this.getJobs();
         this.closeModalForm();
         this.onShowAlert();
       })
@@ -595,7 +593,7 @@ class Job extends React.Component {
         let jobs = [...this.state.data];
         // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
         // let res = response.data.data.result;
-        jobs.findIndex(job => job.id === this.state.jobIdSelected);
+        // jobs.findIndex(job => job.id === this.state.jobIdSelected);
         let res = response.data.data.result;
         console.log(response);
 
@@ -619,14 +617,7 @@ class Job extends React.Component {
           message: response.data.message
         });
 
-        this.getJobs(
-          this.state.search,
-          this.state.location,
-          this.state.limit,
-          this.state.page,
-          this.state.sortby,
-          this.state.orderby
-        );
+        this.getJobs();
         this.closeModalForm();
         this.onShowAlert();
       })
@@ -684,10 +675,13 @@ class Job extends React.Component {
           // console.log(jobs);
           console.log(response);
           // console.log(index);
-          jobs.splice(index, 1);
+          // jobs.splice(index, 1);
           console.log(jobs);
+
+          this.props.dispatch(deleteJobRedux(index));
+
           this.setState({
-            data: jobs,
+            // data: jobs,
             isError: response.data.error,
             message: response.data.message
           });
@@ -732,7 +726,7 @@ class Job extends React.Component {
           tag={Link}
           onClick={() => this.addJobClick()}
         >
-          <i className="ni ni-spaceship" />
+          <i className="ni ni-fat-add" />
           <span>Tambah Pekerjaan</span>
         </Button>
       );
@@ -740,6 +734,17 @@ class Job extends React.Component {
   };
 
   render() {
+    // getToken = () => {
+    //   if (ls.get('token') && ls.get('token') !== undefined) {
+    //     this.setState({
+    //       getToken: true
+    //     });
+    //   } else {
+    //     this.setState({
+    //       getToken: false
+    //     });
+    //   }
+    // };
     return (
       <>
         <div className="main-content" ref="mainContent">
@@ -954,7 +959,7 @@ class Job extends React.Component {
               <Col md="9">{this.ifEmptyJobs()}</Col>
             </Row>
           </Container>
-          <Container className="mt-2">{this.pagination()}</Container>
+          <Container className="mt-2 mb-7">{this.pagination()}</Container>
 
           <ModalJob
             formStatus={this.state.formStatus}
@@ -987,7 +992,7 @@ class Job extends React.Component {
             logo={this.state.logo}
             job={this.state.data}
             // addJobInvalid={this.addJobInvalid}
-
+            getToken={this.state.getToken}
             dataCategory={this.state.dataCategory}
             dataCompany={this.state.dataCompany}
             cancelButtonHandler={this.cancelButtonHandler}
@@ -1008,7 +1013,7 @@ const alertFixed = {
 };
 const mapStateToProps = state => {
   return {
-    data: state.job
+    job: state.job
   };
 };
 export default connect(mapStateToProps)(Job);

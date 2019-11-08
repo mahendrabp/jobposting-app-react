@@ -13,52 +13,69 @@
 // export default Company;
 
 import React from 'react';
-import { Button, Card, CardBody, CardImg, CardTitle } from 'reactstrap';
+import { Button, Card, CardBody, CardImg, CardTitle, Table } from 'reactstrap';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Loading from '../components/Loading';
 
 class CompanyItem extends React.Component {
   render() {
     return (
       <>
-        {this.props.company.company.map(company => (
-          <Card className="m-3" style={centerStyles} key={company.id}>
-            <CardImg
-              alt="..."
-              src={`http://localhost:5200/public/logo/${company.logo}`}
-              top
-              className="rounded mx-auto d-block"
-              style={{ maxWidth: '10rem', maxHeight: '10rem' }}
-              key={company.id}
-            />
-            <CardBody>
-              <CardTitle style={{ maxWidth: '100px' }}>
-                {company.name}
-              </CardTitle>
+        {/* <div>
+          <Table className="align-items-center" responsive>
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">Logo</th>
+                <th scope="col">Company</th>
+                <th scope="col">Description</th>
+                <th scope="col">Aksi</th>
+              </tr>
+            </thead>
+          </Table>
+        </div> */}
+        {this.props.company.isLoading &&
+          this.props.company.company.map(company => (
+            <div>
+              <Card className="m-3" style={centerStyles} key={company.id}>
+                <CardImg
+                  alt="..."
+                  src={`http://localhost:5200/public/logo/${company.logo}`}
+                  top
+                  className="rounded mx-auto d-block"
+                  style={{ maxWidth: '10rem', maxHeight: '10rem' }}
+                  key={company.id}
+                />
+                <CardBody>
+                  <CardTitle style={{ maxWidth: '100px' }}>
+                    {company.name}
+                  </CardTitle>
 
-              <div style={{ alignContent: 'center' }}>
-                <Button
-                  className="float-right ml-2"
-                  color="primary"
-                  onClick={() => this.props.editHandler(company)}
-                  size="sm"
-                  data-toggle="modal"
-                  data-target="#modalFormCompany"
-                >
-                  Edit
-                </Button>
-                <Button
-                  className="float-right ml-2"
-                  color="danger"
-                  onClick={() => this.props.deleteCompany(company.id)}
-                  size="sm"
-                >
-                  Hapus
-                </Button>
-              </div>
-            </CardBody>
-          </Card>
-        ))}
+                  <div style={{ alignContent: 'center' }}>
+                    <Button
+                      className="float-right ml-2"
+                      color="primary"
+                      onClick={() => this.props.editHandler(company)}
+                      size="sm"
+                      data-toggle="modal"
+                      data-target="#modalFormCompany"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="float-right ml-2"
+                      color="danger"
+                      onClick={() => this.props.deleteCompany(company.id)}
+                      size="sm"
+                    >
+                      Hapus
+                    </Button>
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          ))}
+        {!this.props.company.isLoading && <Loading />}
       </>
     );
   }

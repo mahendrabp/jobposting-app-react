@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input, FormGroup } from 'reactstrap';
 
 const ModalCompany = props => (
   <div
@@ -27,7 +28,7 @@ const ModalCompany = props => (
         </div>
         <form onSubmit={props.onSubmitHandler}>
           <div class="modal-body">
-            <div className="form-group">
+            <FormGroup>
               <label for="name">Name Company</label>
               <input
                 type="text"
@@ -38,12 +39,12 @@ const ModalCompany = props => (
                 onChange={props.inputOnChangeHandler}
                 required
               />
-            </div>
+            </FormGroup>
 
-            <div className="form-group">
+            <FormGroup>
               <label for="description">Description</label>
-              <input
-                type="text"
+              <Input
+                type="textarea"
                 name="description"
                 id="description"
                 className="form-control"
@@ -52,10 +53,10 @@ const ModalCompany = props => (
                 required
                 minLength="100"
               />
-            </div>
-            <div className="form-group">
+            </FormGroup>
+            <FormGroup>
               <label for="location">Location</label>
-              <input
+              <Input
                 type="text"
                 name="location"
                 id="location"
@@ -64,22 +65,22 @@ const ModalCompany = props => (
                 onChange={props.inputOnChangeHandler}
                 required
               />
-            </div>
+            </FormGroup>
 
-            <div class="form-group">
+            <FormGroup>
               <label for="logo">Logo</label>
-              <input
+              <Input
                 type="file"
-                class="form-control-file"
-                name="logo"
-                id="logo"
-                onChange={props.inputFileOnChangeHandler}
+                // name="logo"
+                // id="logo"
+                // value={props.logo}
+                onChange={e => props.inputFileOnChangeHandler(e)}
                 required
               />
               <small class="text-muted">
-                File must be an image in jpg, jpeg, or png format
+                gambar harus berformat jpg, jpeg, atau png
               </small>
-            </div>
+            </FormGroup>
           </div>
           <div class="modal-footer">
             <button

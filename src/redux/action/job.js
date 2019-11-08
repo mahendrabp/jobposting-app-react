@@ -76,9 +76,9 @@ export const updateJobRedux = job => {
     payload: job
   };
 };
-export const deleteJobRedux = job => {
+export const deleteJobRedux = jobId => {
   return {
     type: 'DELETE_JOBB',
-    payload: job
+    payload: jobId
   };
 };

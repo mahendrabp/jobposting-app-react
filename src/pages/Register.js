@@ -1,11 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+// reactstrap components
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroup,
+  Container,
+  Row,
+  Col,
+  Alert
+} from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import backgroundImage from '../assets/img/icons/common/4.svg';
 
-// import backgroundImage from './6.svg';
-// import '../login.css';
+class Register extends React.Component {
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+    this.refs.main.scrollTop = 0;
+  }
 
-class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,26 +35,37 @@ class Register extends Component {
       password: '',
       buttonDisabled: false,
       message: '',
-      isSuccess: false
+      isError: '',
+      visible: false
     };
   }
 
-  registerResult = () => {
-    console.log();
-    if (this.state.message === 'Success to register new user') {
+  registerInvalid = () => {
+    if (this.state.isError === true) {
+      return (
+        <Alert
+          color="danger"
+          isOpen={this.state.visible}
+          toggle={this.onDismiss}
+        >
+          {this.state.message}
+        </Alert>
+      );
+    } else {
       return (
         <>
-          <div class="alert alert-success mt-4" role="alert">
-            {this.state.message}
-          </div>
-          <Redirect to="/" />
+          <Alert
+            color="success"
+            isOpen={this.state.visible}
+            toggle={this.onDismiss}
+          >
+            {this.state.message}{' '}
+            <Link className="mr-7" to="/login">
+              Login
+            </Link>
+          </Alert>
+          {/* <Redirect to="/dashboard" />; */}
         </>
-      );
-    } else if (this.state.message === 'email already exist.') {
-      return (
-        <div class="alert alert-danger mt-4" role="alert">
-          {this.state.message}
-        </div>
       );
     }
   };
@@ -55,110 +88,138 @@ class Register extends Component {
       .post(url, payload)
       .then(response => {
         console.log(response);
-        let message = response.data.message;
+        let message = response.data;
         if (
           this.state.message === 'Username already exist.' ||
           this.state.message === 'Register failed.'
         ) {
           this.setState({
             buttonDisabled: true,
-            message
+            message,
+            visible: true
           });
         } else {
           this.setState({
             buttonDisabled: false,
-            message: 'Register failed.'
+            isError: false,
+            message: 'Register Success',
+            visible: true
           });
         }
       })
       .catch(error => {
         let message = error.response.data.message;
-        console.log(message);
-        if (this.state.isSuccess === false) {
+        console.log(error.response.data.error);
+        if (error.response.data.error === true) {
           this.setState({
-            message: message
+            message: message,
+            isError: true,
+            visible: true
           });
         }
-        // if (message === 'email already exist.') {
-        //   this.setState({
-        //     buttonDisabled: false,
-        //     message
-        //   });
-        // } else {
-        //   this.setState({
-        //     buttonDisabled: false,
-        //     message: 'Register failed.'
-        //   });
-        // }
       });
   };
 
   render() {
     return (
-      <section class="fdb-block py-0">
-        <div
-          class="container py-5 my-5"
-          // style={{ backgroundImage: `url(${backgroundImage})` }}
-        >
-          <div class="row">
-            <div class="col-12 col-md-8 col-lg-7 col-xl-5 text-left fdb-box">
-              <form onSubmit={this.onSubmitHandler}>
-                <div class="row">
-                  <div class="col">
-                    <h1>Register</h1>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col mt-4">
-                    <input
-                      type="text"
-                      name="email"
-                      id="email"
-                      className="form-control"
-                      placeholder="email"
-                      value={this.state.email}
-                      onChange={this.inputOnChangeHandler}
-                    />
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col">
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      className="form-control"
-                      placeholder="Password"
-                      value={this.state.password}
-                      onChange={this.inputOnChangeHandler}
-                    />
-                  </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col">
-                    <button class="btn btn-primary btn-raised" type="submit">
-                      Register
-                    </button>
-                  </div>
-                </div>
-              </form>
-              <p className="mt-4">
-                Already have an account?{' '}
-                <Link
-                  className="btn btn-link pl-1 text-capitalize"
-                  to="/"
-                  exact
-                >
-                  Login here.
-                </Link>
-              </p>
-              {this.registerResult()}
+      <>
+        {/* <DemoNavbar /> */}
+        <main ref="main">
+          <section className="section section-shaped section-lg">
+            <div className="shape shape-style-1 bg-gradient-default">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
             </div>
-          </div>
-        </div>
-      </section>
+            <Container className="pt-lg-md" style={bgImage}>
+              <Row className="justify-content-center mt-7">
+                <Col lg="5">
+                  <Card className="bg-secondary shadow border-0">
+                    <CardBody className="px-lg-5 py-lg-5">
+                      <div className="text-center text-muted mb-4">
+                        <h2>Daftar dengan email</h2>
+                      </div>
+                      <Form onSubmit={this.onSubmitHandler}>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-email-83" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              type="text"
+                              name="email"
+                              id="email"
+                              className="form-control"
+                              placeholder="Email"
+                              value={this.state.email}
+                              onChange={this.inputOnChangeHandler}
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                        <FormGroup>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              type="password"
+                              name="password"
+                              id="password"
+                              className="form-control"
+                              placeholder="Password"
+                              value={this.state.password}
+                              onChange={this.inputOnChangeHandler}
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                        <div className="text-center">
+                          <Button className="mt-4" color="info" type="submit">
+                            Daftar
+                          </Button>
+                        </div>
+                        <div></div>{' '}
+                        <div>
+                          <div className="col mt-2">
+                            {this.registerInvalid()}
+                          </div>{' '}
+                        </div>
+                      </Form>
+                    </CardBody>
+                  </Card>
+                  <p className="mt-4">
+                    Sudah Punya Akun?{' '}
+                    <Link
+                      className="btn btn-link pl-1 text-capitalize"
+                      to="/login"
+                      exact
+                    >
+                      Login disini.
+                    </Link>
+                  </p>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        </main>
+        {/* <SimpleFooter /> */}
+      </>
     );
   }
 }
 
+const bgImage = {
+  backgroundSize: 'contain',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+  backgroundImage: `url(${backgroundImage})`
+};
 export default Register;

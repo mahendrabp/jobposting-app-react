@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import company from '../reducer/company';
 export const getCompanyRedux = () => {
   return {
     type: 'GET_COMPANY',
@@ -14,5 +15,12 @@ export const getCompanyRedux = () => {
           reject(err);
         });
     })
+  };
+};
+
+export const addCompanyRedux = company => {
+  return {
+    type: 'PUSH_PRODUCT',
+    payload: company
   };
 };

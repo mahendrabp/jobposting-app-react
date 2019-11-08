@@ -45,7 +45,7 @@ import ModalJob from '../components/ModalJob';
 import ModalJobDetail from '../components/ModalJobDetail';
 import ls from 'local-storage';
 
-// import routes from 'routes.js';
+// import routes from 'routes.jstem';
 
 class Job extends React.Component {
   constructor(props) {
@@ -637,13 +637,7 @@ class Job extends React.Component {
       );
     } else {
       addJobBtn = (
-        <Input
-          type="button"
-          className="nav-link-icon"
-          to="/admin/user-profile"
-          to="/login"
-          tag={Link}
-        >
+        <Input type="button" className="nav-link-icon" to="/login" tag={Link}>
           {/* <i className="ni ni-spaceship" />
           <span className="nav-link-inner--text">Wanna Add Job?</span> */}
         </Input>
