@@ -328,4 +328,3 @@ const mapStateToProps = state => ({
   job: state.job
 });
 export default connect(mapStateToProps)(JobItem);
-// export default JobItem;

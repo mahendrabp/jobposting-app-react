@@ -99,7 +99,7 @@ class Job extends React.Component {
   }
 
   getJobs = (search, location, limit, page, sortby, orderby) => {
-    let url = `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
+    let url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
     Axios.get(url)
       .then(result => {
         const data = result.data.data.result;

@@ -12,16 +12,6 @@ import { getCompanyRedux } from '../redux/action/company';
 
 import ModalCompany from '../components/ModalCompany';
 
-// const Company = props => {
-//   return (
-//     <div>
-//       <NavBar></NavBar>
-//       <CompanyItem></CompanyItem>
-//       <Sidebar></Sidebar>
-//     </div>
-//   );
-// };
-
 class Company extends React.Component {
   constructor(props) {
     super(props);
@@ -47,22 +37,6 @@ class Company extends React.Component {
   getDataCompany = () => {
     this.props.dispatch(getCompanyRedux());
   };
-
-  // getCompany = () => {
-  //   let url = `http://localhost:5200/api/v1/companies`;
-  //   Axios.get(url)
-  //     .then(response => {
-  //       // console.log(response.data.data);
-  //       const data = response.data.data;
-  //       // console.log(data);
-  //       this.setState({
-  //         data: data
-  //       });
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
 
   cancelButtonHandler = e => {
     e.preventDefault();
@@ -240,13 +214,6 @@ class Company extends React.Component {
       [e.target.name]: e.target.value
     });
   };
-
-  // inputFileOnChangeHandler = e => {
-  //   console.log(e.target.files[0]);
-  //   this.setState({
-  //     logo: e.target.files[0]
-  //   });
-  // };
 
   inputFileOnChangeHandler = e => {
     console.log(e.target.files[0]);

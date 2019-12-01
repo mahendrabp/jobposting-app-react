@@ -1,9 +1,4 @@
 import React from 'react';
-// import Axios from 'axios';
-// import { Route, Switch, Redirect } from 'react-router-dom';
-// import ls from 'local-storage';
-// reactstrap components
-// import { Container } from 'reactstrap';
 
 // core components
 import NavBar from './NavBar';

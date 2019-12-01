@@ -4,7 +4,6 @@ import React from 'react';
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -17,7 +16,7 @@ import {
   Col,
   Alert
 } from 'reactstrap';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import backgroundImage from '../assets/img/icons/common/4.svg';
 
