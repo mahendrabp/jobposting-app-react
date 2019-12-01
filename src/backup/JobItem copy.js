@@ -150,10 +150,10 @@ const JobItem = props =>
                             <img
                               alt="..."
                               className="rounded-circle"
-                              // src={require('http://localhost:5200/public/logo' +
+                              // src={require('http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +
                               //   job.log)}
 
-                              src={`http://localhost:5200/public/logo/${job.logo}`}
+                              src={`http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${job.logo}`}
                             />
                           </a>
                         </div>

@@ -46,6 +46,7 @@ class Register extends React.Component {
           color="danger"
           isOpen={this.state.visible}
           toggle={this.onDismiss}
+          style={{ textAlign: 'center' }}
         >
           {this.state.message}
         </Alert>
@@ -77,7 +78,8 @@ class Register extends React.Component {
     e.preventDefault();
     this.setState({ buttonDisabled: true });
 
-    var url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/users/register';
+    var url =
+      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/users/register';
     var payload = {
       email: this.state.email,
       password: this.state.password
@@ -108,7 +110,7 @@ class Register extends React.Component {
       })
       .catch(error => {
         let message = error.response.data.message;
-        console.log(error.response.data.error);
+        console.log(error);
         if (error.response.data.error === true) {
           this.setState({
             message: message,

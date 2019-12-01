@@ -27,12 +27,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      buttonDisabled: false,
-      message: '',
-      visible: true,
-      isLogin: ''
+      buttonDisabled: false
+      // visible: this.props.user.visible
     };
 
     this.onDismiss = this.onDismiss.bind(this);
@@ -102,9 +98,9 @@ class Login extends Component {
     if (this.props.user.isLogin === false) {
       return (
         <Alert
+          style={{ textAlign: 'center' }}
           color="danger"
-          isOpen={this.state.visible}
-          toggle={this.onDismiss}
+          isOpen={this.props.user.visible}
         >
           {this.props.user.message}
         </Alert>
@@ -112,11 +108,7 @@ class Login extends Component {
     } else if (this.props.user.isLogin === true) {
       return (
         <>
-          <Alert
-            color="success"
-            isOpen={this.state.visible}
-            toggle={this.onDismiss}
-          >
+          <Alert color="success" isOpen={this.props.user.visible}>
             {this.props.user.message}
           </Alert>
           {this.props.history.push('/dashboard')}

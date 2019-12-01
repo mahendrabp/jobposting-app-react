@@ -12,3 +12,11 @@ export const logout = () => ({
   type: 'LOGOUT_USER',
   payload: null
 });
+
+export const register = data => ({
+  type: 'REGISTER_USER',
+  payload: axios.post(
+    'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/users/register',
+    data
+  )
+});

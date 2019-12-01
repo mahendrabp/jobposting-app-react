@@ -124,7 +124,7 @@ class Job extends React.Component {
   };
 
   dataCategory = () => {
-    const url = 'http://localhost:5200/api/v1/categories';
+    const url = 'http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
     Axios.get(url)
       .then(result => {
         const dataCategory = result.data.data;
@@ -139,7 +139,7 @@ class Job extends React.Component {
   };
 
   dataCompany = () => {
-    let url = `http://localhost:5200/api/v1/companies`;
+    let url = `http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies`;
     Axios.get(url)
       .then(result => {
         console.log(result.data.data);
@@ -430,16 +430,16 @@ class Job extends React.Component {
     // this.addJob(url, payload, header);
 
     if (this.state.formStatus === 'Add') {
-      url = 'http://localhost:5200/api/v1/jobs';
+      url = 'http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs';
       this.addJob(url, payload);
     } else {
-      url = `http://localhost:5200/api/v1/jobs/${this.state.jobIdSelected}`;
+      url = `http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${this.state.jobIdSelected}`;
       this.editJob(url, payload);
     }
   };
 
   // getData = async () => {
-  //   const url = await Axios.get('http://localhost:5200/api/v1/jobs');
+  //   const url = await Axios.get('http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs');
   //   const getAllJobs = url.data.data.result;
   //   console.log(getAllJobs);
   //   return getAllJobs;
@@ -585,7 +585,7 @@ class Job extends React.Component {
 
   deleteButtonHandler = id => {
     if (window.confirm('Are you sure to delete this job?')) {
-      var url = `http://localhost:5200/api/v1/jobs/${id}`;
+      var url = `http://http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${id}`;
       // const header = {
       //   headers: {
       //     Authorization: `Bearer ${ls.get('token')}`
