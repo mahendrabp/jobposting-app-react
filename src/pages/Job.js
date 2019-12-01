@@ -19,9 +19,7 @@ import {
   InputGroupText,
   Form,
   UncontrolledTooltip,
-  Card,
-  CardBody,
-  CardText
+  Card
 } from 'reactstrap';
 // core components
 
@@ -386,7 +384,7 @@ class Job extends React.Component {
   ifEmptyJobs = () => {
     let data = [...this.state.data];
     const err = this.state.errStatus;
-    console.log();
+    // console.log();
     if (data && data !== undefined && data.length >= 1 && data !== []) {
       return (
         <div class="row">
@@ -636,7 +634,6 @@ class Job extends React.Component {
       category_id: job.category_id,
       company_id: job.company_id,
       salary: job.salary,
-
       formStatus: 'Edit',
       jobIdSelected: job.id
     });
@@ -728,6 +725,29 @@ class Job extends React.Component {
         >
           <i className="ni ni-fat-add" />
           <span>Tambah Pekerjaan</span>
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          // data-toggle="modal"
+          // data-target="#modalFormJob"
+          style={{ cursor: 'pointer', maxWidth: '100%' }}
+          to="/login"
+          tag={Link}
+          // onClick={() => this.addJobClick()}
+        >
+          <span
+            style={{
+              textAlign: 'center',
+              maxWidth: '2px',
+              marginRight: '20px',
+              fontSize: '14px',
+              wordWrap: 'break-word'
+            }}
+          >
+            Ingin Posting Pekerjaan?
+          </span>
         </Button>
       );
     }
@@ -929,7 +949,7 @@ class Job extends React.Component {
                     {this.addJobBtn()}
                   </div>
                   <Card style={{ width: '250px' }}>
-                    <CardBody>
+                    {/* <CardBody>
                       <CardText>
                         <span>Pilih Lokasi</span>
                         <br></br>
@@ -952,7 +972,7 @@ class Job extends React.Component {
                           </label>
                         </div>
                       ))}
-                    </CardBody>
+                    </CardBody> */}
                   </Card>
                 </>
               </Col>

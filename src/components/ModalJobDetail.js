@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Jumbotron, Row, Col, Container, Input } from 'reactstrap';
 // import Job from '../pages/Job';
 // import { Container } from '@material-ui/core';
@@ -47,84 +47,117 @@ const ModalJobDetail = props => {
             </button>
           </div>
           <div className="modal-body">
-            <Jumbotron style={jumbotron}>
-              <Container>
-                <Row>
-                  <Col md="10">
-                    <Row>
-                      <div>
-                        <h1>{props.name}</h1>
-                      </div>
-                    </Row>
-                    <Row>
-                      <p className="lead ml-2 mr-2 mt--1">
-                        <i className="ni ni-building"></i> {props.company}
-                      </p>{' '}
-                      <p className="mt--1">|</p>
-                      <p className="lead ml-2 mr-2 mt--1">
-                        <i className="ni ni-pin-3"></i> {props.location}
+            <Fragment>
+              <div
+                className="jumbotron jumbotron-fluid"
+                style={{
+                  marginTop: '-25px',
+                  minHeight: '350px',
+                  backgroundImage:
+                    'url("https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-013.jpg")'
+                }}
+              >
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12 col-lg-8">
+                      <h1
+                        className="display-4"
+                        style={{
+                          fontSize: '35px',
+                          color: 'white',
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {props.name}
+                      </h1>
+                      <p
+                        style={{
+                          fontSize: '25px',
+                          color: 'white',
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        <i className="fas fa-building" /> {props.company}
                       </p>
-                      <p className="mt--1">|</p>
-                      {props.getToken}
-                      <p className="lead ml-2 mr-2 mt--1">{showSalary}</p>
-                    </Row>
-                    <Row>
-                      <p className="ml-2 mr-2 mt--2">
-                        <i className="ni ni-align-center"></i>{' '}
-                        <span>{props.category.toUpperCase()}</span>
-                      </p>{' '}
-                      <p className="mt--2">|</p>
-                      <p className="ml-2 mr-2 mt--2">
-                        <i className="ni ni-calendar-grid-58"></i>{' '}
-                        <span>
-                          {moment(props.updated_at).fromNow(true)} yang lalu
-                        </span>
+                      <p style={{ color: 'white' }}>
+                        <i className="fas fa-map-marker-alt" /> {props.location}
+                        &nbsp;&nbsp;|&nbsp;&nbsp;
+                        <i className="fas fa-briefcase" /> {props.category}
+                        {/* &nbsp;&nbsp;|&nbsp;&nbsp; */}
+                        {/* <i className="fas fa-money-bill-wave" />{' '}
+                  {localStorage.getItem('Authorization')
+                    ? v.salary
+                    : 'Login to see salary'} */}
                       </p>
-                    </Row>
-                    <Row>
-                      <Col>Simpan</Col>
-                      <Col>Bagikan</Col>
-                      <Col>Laporkan</Col>
-                    </Row>
-                  </Col>
-                  <Col md="2">
-                    <div className="card-profile-image mt-2">
-                      <a>
-                        <img
-                          style={squareLogo}
-                          alt="..."
-                          // src={require('http://localhost:5200/public/logo' +
-                          //   job.log)}
-
-                          src={`http://localhost:5200/public/logo/${props.logo}`}
-                        />
-                      </a>
+                      <p style={{ color: 'white' }}>{showSalary}</p>
                     </div>
-                  </Col>
-                </Row>
-              </Container>
-            </Jumbotron>
-
-            <hr></hr>
-            <Container>
-              <Row>
-                <Col md="6">
-                  <div
-                    className="d-flex justify-content-start"
-                    style={{
-                      whiteSpace: 'pre',
-                      wordBreak: 'break-word',
-                      overflowWrap: 'break-word',
-                      position: 'relative'
-                    }}
-                  >
-                    {props.description}
+                    <div className="col-12 col-lg-4">
+                      <img
+                        src={`http://localhost:5200/public/logo/${props.logo}`}
+                        width="300px"
+                      />
+                    </div>
                   </div>
-                </Col>
-              </Row>
-            </Container>
+                </div>
+              </div>
+              <div className="container" style={{ marginTop: '0px' }}>
+                <div className="row">
+                  <div className="col-12 col-lg-8 text-justify">
+                    <div className="card shadow border-0">
+                      <div className="card-body p-5">
+                        <p
+                          style={{
+                            // lineHeight: '1.8',
+                            // fontSize: '16px',
+                            // letterSpacing: '1.8px'
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
+                            position: 'relative'
+                          }}
+                        >
+                          {props.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-lg-4">
+                    <div className="card shadow border-0">
+                      <div className="card-body p-5">
+                        <h4 className="text-center">Tentang {props.company}</h4>
+                        <hr />
+                        <p
+                          className=""
+                          style={{
+                            lineHeight: '1.8',
+                            fontSize: '14px',
+                            letterSpacing: '1.8px'
+                          }}
+                        >
+                          {/* {props.company.data
+                      .filter(i => i.name === v.companies)
+                      .map((value, index) => (
+                        <Fragment key={index.toString()}>
+                          {value.description}
+                        </Fragment>
+                      ))} */}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Fragment>
           </div>
           <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-info btn-raised"
+              data-dismiss="modal"
+              onClick={props.cancelButtonHandler}
+            >
+              Apply
+            </button>
             <button
               type="button"
               class="btn btn-danger btn-raised"

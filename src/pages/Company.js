@@ -1,23 +1,8 @@
-// import React from 'react';
-
-// import { Link, Redirect } from 'react-router-dom';
-// import NavBar from '../components/NavBar';
-// import Sidebar from '../components/Sidebar';
-
-// class Company extends React.Component {
-//   render() {
-//     return <></>;
-//   }
-// }
-
-// export default Company;
-
 import React from 'react';
 
 import CompanyItem from './CompanyItem';
 import NavBar from '../components/NavBar';
 
-import Axios from 'axios';
 import axios from 'axios';
 import { Row, Button, Container, Alert } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
