@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Jumbotron, Row, Col, Container, Input } from 'reactstrap';
 // import Job from '../pages/Job';
 // import { Container } from '@material-ui/core';
 import moment from 'moment';
@@ -126,21 +125,8 @@ const ModalJobDetail = props => {
                       <div className="card-body p-5">
                         <h4 className="text-center">Tentang {props.company}</h4>
                         <hr />
-                        <p
-                          className=""
-                          style={{
-                            lineHeight: '1.8',
-                            fontSize: '14px',
-                            letterSpacing: '1.8px'
-                          }}
-                        >
-                          {/* {props.company.data
-                      .filter(i => i.name === v.companies)
-                      .map((value, index) => (
-                        <Fragment key={index.toString()}>
-                          {value.description}
-                        </Fragment>
-                      ))} */}
+                        <p className="" style={{}}>
+                          <Fragment>{props.companyDesc}</Fragment>
                         </p>
                       </div>
                     </div>

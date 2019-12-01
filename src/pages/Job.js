@@ -648,6 +648,7 @@ class Job extends React.Component {
       company_id: job.company_id,
       category: job.category,
       company: job.company,
+      companyDesc: job.companyDesc,
       salary: job.salary,
       logo: job.logo,
       updated_at: job.updated_at,
@@ -1008,6 +1009,7 @@ class Job extends React.Component {
             category={this.state.category}
             company={this.state.company}
             salary={this.state.salary}
+            companyDesc={this.state.companyDesc}
             updated_at={this.state.updated_at}
             logo={this.state.logo}
             job={this.state.data}
