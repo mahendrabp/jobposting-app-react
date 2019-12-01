@@ -82,10 +82,10 @@ const JobItem = props =>
                     <a href="" onClick={e => e.preventDefault()}>
                       <img
                         alt="..."
-                        // src={require('http://localhost:5200/public/logo' +
+                        // src={require('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +
                         //   job.log)}
                         style={thumbImg}
-                        src={`http://localhost:5200/public/logo/${job.logo}`}
+                        src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${job.logo}`}
                       />
                     </a>
                   </div>
@@ -239,10 +239,10 @@ const thumbImg = {
 //                         <a href="" onClick={e => e.preventDefault()}>
 //                           <img
 //                             alt="..."
-//                             // src={require('http://localhost:5200/public/logo' +
+//                             // src={require('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +
 //                             //   job.log)}
 
-//                             src={`http://localhost:5200/public/logo/${job.logo}`}
+//                             src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${job.logo}`}
 //                           />
 //                         </a>
 //                       </div>

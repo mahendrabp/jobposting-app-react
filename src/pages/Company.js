@@ -89,11 +89,11 @@ class Company extends React.Component {
     payload.set('description', this.state.description);
 
     if (this.state.formStatus === 'Add') {
-      url = 'http://localhost:5200/api/v1/companies';
+      url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies';
       this.addCompany(url, payload);
     } else {
       this.editCompany(
-        `http://localhost:5200/api/v1/companies/${this.state.companyIdSelected}`,
+        `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${this.state.companyIdSelected}`,
         payload
       );
     }
@@ -186,7 +186,7 @@ class Company extends React.Component {
 
   deleteCompany = id => {
     if (window.confirm('are you sure delete this company')) {
-      var url = `http://localhost:5200/api/v1/companies/${id}`;
+      var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${id}`;
       axios
         .delete(url)
         .then(response => {

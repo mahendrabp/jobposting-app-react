@@ -23,7 +23,7 @@ import axios from 'axios';
 
 // axios
 //   .get(
-//     `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
+//     `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
 //   )
 //         .then(result => resolve(result))
 //         .catch(err => reject(err));
@@ -44,7 +44,7 @@ export const getJobRedux = (
     payload: new Promise((resolve, reject) => {
       axios
         .get(
-          `http://localhost:5200/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
+          `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
         )
         .then(result => {
           resolve({

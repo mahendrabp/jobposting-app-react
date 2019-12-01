@@ -92,7 +92,7 @@ const ModalJobDetail = props => {
                     </div>
                     <div className="col-12 col-lg-4">
                       <img
-                        src={`http://localhost:5200/public/logo/${props.logo}`}
+                        src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${props.logo}`}
                         width="300px"
                       />
                     </div>

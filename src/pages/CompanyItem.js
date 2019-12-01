@@ -26,7 +26,7 @@ class CompanyItem extends React.Component {
               <Card className="m-3" style={centerStyles} key={company.id}>
                 <CardImg
                   alt="..."
-                  src={`http://localhost:5200/public/logo/${company.logo}`}
+                  src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${company.logo}`}
                   top
                   className="rounded mx-auto d-block"
                   style={{ maxWidth: '10rem', maxHeight: '10rem' }}

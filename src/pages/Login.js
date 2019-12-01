@@ -3,6 +3,8 @@ import Axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
 import backgroundImage from '../assets/img/icons/common/4.svg';
+import { connect } from 'react-redux';
+import { login } from '../redux/action/user';
 
 // reactstrap components
 import {
@@ -44,60 +46,70 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmitHandler = e => {
+  onSubmitHandler = async e => {
     e.preventDefault();
 
-    var url = 'http://localhost:5200/api/v1/users/login';
-    var payload = {
-      email: this.state.email,
-      password: this.state.password
-    };
+    // var url =
+    //   'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/users/login';
+    // var payload = {
+    //   email: this.state.email,
+    //   password: this.state.password
+    // };
 
-    Axios.post(url, payload)
-      .then(res => {
-        var dataResponse = res.data;
-        let success = dataResponse.status;
-        console.log(res);
-        if (success === 200) {
-          ls.set('token', dataResponse.token);
-          // ls.set('email', dataResponse.email);
-          this.setState({
-            isLogin: true,
-            buttonDisable: true,
-            message: dataResponse.message,
-            visible: true
-          });
-        } else {
-          this.setState({
-            isLogin: false,
-            buttonDisable: false,
-            visible: true
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({
-          isLogin: false,
-          buttonDisable: false,
-          message: err.response.data.message,
-          visible: true
-        });
-      });
+    // Axios.post(url, payload)
+    //   .then(res => {
+    //     var dataResponse = res.data;
+    //     let success = dataResponse.status;
+    //     console.log(res);
+    //     if (success === 200) {
+    //       ls.set('token', dataResponse.token);
+    //       // ls.set('email', dataResponse.email);
+    //       this.setState({
+    //         isLogin: true,
+    //         buttonDisable: true,
+    //         message: dataResponse.message,
+    //         visible: true
+    //       });
+    //     } else {
+    //       this.setState({
+    //         isLogin: false,
+    //         buttonDisable: false,
+    //         visible: true
+    //       });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     this.setState({
+    //       isLogin: false,
+    //       buttonDisable: false,
+    //       message: err.response.data.message,
+    //       visible: true
+    //     });
+    //   });
+
+    const data = { email: this.state.email, password: this.state.password };
+    await this.props.dispatch(login(data));
+
+    const token = this.props.user.token;
+    // console.log(this.props.dispatch(login(data)));
+    console.log(token);
+    ls.set('token', token);
+    this.props.history.push('/dashboard');
   };
 
   loginInvalid = () => {
-    if (this.state.isLogin === false) {
+    if (this.props.user.isLogin === false) {
       return (
         <Alert
           color="danger"
           isOpen={this.state.visible}
           toggle={this.onDismiss}
         >
-          {this.state.message}
+          {this.props.user.message}
         </Alert>
       );
-    } else if (this.state.isLogin === true) {
+    } else if (this.props.user.isLogin === true) {
       return (
         <>
           <Alert
@@ -105,9 +117,9 @@ class Login extends Component {
             isOpen={this.state.visible}
             toggle={this.onDismiss}
           >
-            {this.state.message}
+            {this.props.user.message}
           </Alert>
-          <Redirect to="/dashboard" />;
+          {this.props.history.push('/dashboard')}
         </>
       );
     }
@@ -224,4 +236,8 @@ const bgImage = {
   backgroundImage: `url(${backgroundImage})`
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps)(Login);

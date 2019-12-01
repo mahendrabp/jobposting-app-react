@@ -5,7 +5,7 @@ export const getCompanyRedux = () => {
     type: 'GET_COMPANY',
     payload: new Promise((resolve, reject) => {
       axios
-        .get(`http://localhost:5200/api/v1/companies`)
+        .get(`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies`)
         .then(result => {
           resolve({
             result

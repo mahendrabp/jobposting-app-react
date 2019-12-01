@@ -22,21 +22,9 @@ import ls from 'local-storage';
 class Header extends React.Component {
   render() {
     let loginlogout;
-    if (ls.get('token') && ls.get('token') !== undefined) {
+    if (ls.get('token') && ls.get('token') !== '') {
       loginlogout = (
         <UncontrolledDropdown nav>
-          {/* <NavLink
-            aria-expanded={false}
-            aria-haspopup={true}
-            data-toggle="dropdown"
-           
-            id="navbar-primary_dropdown_1"
-            onClick={e => e.preventDefault()}
-            role="button"
-          >
-            <i className="ni ni-single-02" />
-            <span className="nav-link-inner--text">Login</span>
-          </NavLink> */}
           <NavLink
             className="nav-link-icon mt-2"
             // to="/login"
@@ -51,9 +39,9 @@ class Header extends React.Component {
             </span>
           </NavLink>
           <DropdownMenu aria-labelledby="navbar-primary_dropdown_1" right>
-            <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+            {/* <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
               Edit Profil -tahap pengembangan-
-            </DropdownItem>
+            </DropdownItem> */}
             <DropdownItem divider />
             <DropdownItem tag={Link} to="/logout">
               Keluar
@@ -72,7 +60,7 @@ class Header extends React.Component {
     }
 
     let company;
-    if (ls.get('token') && ls.get('token') !== undefined) {
+    if (ls.get('token') && ls.get('token') !== '') {
       company = (
         <NavLink className="nav-link-icon mt-2" to="/company" tag={Link}>
           <span style={spanStyle} className="nav-link-inner--text">
@@ -91,7 +79,7 @@ class Header extends React.Component {
     }
 
     let signup;
-    if (ls.get('token') && ls.get('token') !== undefined) {
+    if (ls.get('token') && ls.get('token') !== '') {
       signup = <span></span>;
     } else {
       signup = (
