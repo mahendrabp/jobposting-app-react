@@ -20,12 +20,12 @@
 // Extra large icons
 
 .icon-xl {
-  width: $icon-size-xl;
-  height: $icon-size-xl;
+  width: 5rem;
+  height: 5rem;
 
   i,
   svg {
-    font-size: $icon-size-xl - 0.75;
+    font-size: 5rem - 0.75;
   }
 
   + .icon-text {
