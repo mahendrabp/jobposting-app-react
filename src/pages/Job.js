@@ -63,7 +63,7 @@ class Job extends React.Component {
 
       category_id: 1,
       company_id: 1,
-      formStatus: 'Add',
+      formStatus: 'Tambah',
       buttonDisabled: false,
       category: '',
       company: '',
@@ -186,7 +186,8 @@ class Job extends React.Component {
   };
 
   dataCategory = () => {
-    const url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
+    const url =
+      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
     Axios.get(url)
       .then(result => {
         const dataCategory = result.data.data;
@@ -461,7 +462,7 @@ class Job extends React.Component {
 
     // this.addJob(url, payload, header);
 
-    if (this.state.formStatus === 'Add') {
+    if (this.state.formStatus === 'Tambah') {
       url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs';
       this.addJob(url, payload);
     } else {
@@ -532,7 +533,7 @@ class Job extends React.Component {
           category_id: '',
           company_id: '',
           salary: '',
-          formStatus: 'Add',
+          formStatus: 'Tambah',
           isError: isError,
           message: message,
           isVisible: true
@@ -581,7 +582,7 @@ class Job extends React.Component {
       location: '',
       category_id: 1,
       company_id: 1,
-      formStatus: 'Add'
+      formStatus: 'Tambah'
     });
   };
 
@@ -592,7 +593,7 @@ class Job extends React.Component {
         // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
         // let res = response.data.data.result;
         // jobs.findIndex(job => job.id === this.state.jobIdSelected);
-        let res = response.data.data.result;
+        // let res = response.data.data.result;
         console.log(response);
 
         // jobs[index].name = res.nameoke;
@@ -610,7 +611,7 @@ class Job extends React.Component {
           location: '',
           category_id: 1,
           company_id: 1,
-          formStatus: 'Add',
+          formStatus: 'Tambah',
           isError: response.data.error,
           message: response.data.message
         });
@@ -652,7 +653,7 @@ class Job extends React.Component {
       salary: job.salary,
       logo: job.logo,
       updated_at: job.updated_at,
-      formStatus: 'Add',
+      formStatus: 'Tambah',
       jobIdSelected: job.id
     })
   ];
@@ -709,7 +710,7 @@ class Job extends React.Component {
       location: '',
       category_id: 1,
       company_id: 1,
-      formStatus: 'Add',
+      formStatus: 'Tambah',
       buttonDisabled: false
     });
   };

@@ -1,7 +1,8 @@
 const initialState = {
   isLoading: false,
-  isError: false,
-  company: []
+  isError: '',
+  company: [],
+  message: ''
 };
 
 const company = (state = initialState, action) => {
@@ -18,11 +19,37 @@ const company = (state = initialState, action) => {
         isError: true
       };
     case 'GET_COMPANY_FULFILLED':
+      // console.log(action.payload.data);
       return {
         ...state,
         isloading: false,
         isError: false,
-        company: action.payload.result.data.data
+        company: action.payload.data.data
+      };
+
+    case 'ADD_COMPANY_PENDING':
+      return {
+        ...state,
+        isLoading: true
+      };
+
+    case 'ADD_COMPANY_FULFILLED':
+      // console.log(action.payload.data);
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        company: [...state.company, action.payload.data.data],
+        message: action.payload.data.message
+      };
+    case 'ADD_COMPANY_REJECTED':
+      // console.log(action.payload.response.data.message);
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        message: action.payload.response.data.message,
+        company: [...state.company]
       };
 
     default: {

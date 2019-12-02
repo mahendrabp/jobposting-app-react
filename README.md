@@ -1,68 +1,137 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# CrownHire : Job posting app
 
-## Available Scripts
+<p align="center">
+    <img title="login" src="https://i.ibb.co/fDVYqwh/login.png" />
+</p>
 
-In the project directory, you can run:
+<p align="center">
+    <img title="dashboard" src="https://i.ibb.co/ZBhVH9P/dashboard.png" />
+</p>
+<p align="center">
+    <img title="form" src="https://i.ibb.co/MCkTHT0/addjobform.png" />
+</p>
+<p align="center">
+    <img title="detail" src="https://i.ibb.co/LrvjTGZ/detail.png" />
+</p>
+<p align="center">
+    <img title="detail" src="https://i.ibb.co/2NDySfR/companylist.png" />
+</p>
 
-### `yarn start`
+## Table Of Contents
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Intro](#Intro)
+- [Requirments](#Requirments)
+- [Related Projects](#Related-Projects)
+- [Dependencies](#Dependencies)
+  - [Clone Repo](#Clone-Repo)
+  - [Install Depedencies](#Install-Depedencies)
+  - [Setup Environment](#Setup-Environment)
+  - [Run server development](#Run-server-development)
+  - [Build For Production](#Build-For-Production)
+- [Dependencies](#Dependencies)
+- [License](#License)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+---
 
-### `yarn test`
+### Intro
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This is a simple job posting web application made with react.js
 
-### `yarn build`
+[Demo]()
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [x] Manage Job (CRUD)
+- [x] List and Detail Job
+- [x] Search Job what you want based on location or keyword
+- [x] Manage Company (CRUD)
+- [x] Single-Page Application
+- [x] Authentication with JWT
 
-### `yarn eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Requirments
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Nodejs](https://nodejs.org/en/) v10 LTS version
+- [Npm](https://www.npmjs.com/get-npm) package / [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) package
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Related Projects
 
-## Learn More
+This project is related to several platforms, you can check it below
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Backend with Node.js [https://github.com/mahendrabp/expressjs-crud-boilerplate](https://github.com/mahendrabp/expressjs-crud-boilerplate)
+- Mobile App (Android) [https://github.com/mahendrabp/CrownHire-JobpostingApp](https://github.com/mahendrabp/CrownHire-JobpostingApp)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### Installation
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+##### 1. Clone Repo
 
-### Analyzing the Bundle Size
+clone the repository
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```sh
+$ git clone https://github.com/mahendrabp/jobposting-app-react
+$ cd jobposting-app-react
+```
 
-### Making a Progressive Web App
+##### Install Depedencies
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Install requirement depedencies
 
-### Advanced Configuration
+```sh
+$ npm install
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+##### Setup Environment
 
-### Deployment
+Before start server development or build for production, you should create new .env file. you can found the backend server here.. [https://github.com/mahendrabp/expressjs-crud-boilerplate](https://github.com/mahendrabp/expressjs-crud-boilerplate)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+```sh
+BASE_URL_API=<Backend-api-url>
+```
 
-### `yarn build` fails to minify
+##### Run server development
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+if you want start on development mode.
+
+```sh
+$ npm start
+```
+
+<!-- ##### Build For Production
+
+build for production ready, and host ready
+
+```sh
+$ npm run build
+``` -->
+
+---
+
+### Dependencies
+
+List of depedencies using in this project
+
+| Plugin                                                                             | Description                                                                                                           |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| [ReactJS](https://reactjs.org)                                                     | JavaScript library for building user interfaces                                                                       |
+| [Axios](https://github.com/axios/axios)                                            | HTTP client for request API                                                                                           |
+| [Bootstrap](https://getbootstrap.com)                                              | CSS Framework                                                                                                         |
+| [Reactstrap](https://reactstrap.github.io)                                         | CSS Framework                                                                                                         |
+| [Moment](https://momentjs.com)                                                     | Manipulate time                                                                                                       |
+| [Redux](https://redux.js.org)                                                      | Global State Management                                                                                               |
+| [Redux Promise Middleware](https://www.npmjs.com/package/redux-promise-middleware) | Promise handler for react redux                                                                                       |
+| [Local-storage]()                                                                  | web storage that allows Javascript websites and apps to store and access data right in the browser                    |
+| [Local-storage]()                                                                  | web storage that allows Javascript websites and apps to store and access data right in the browser with no expiration |
+
+## License and Support
+
+For Bug report, please contact me
+[mahendrabp](https://github.com/mahendrabp 'mahendrabp')
+
+Copyright © 2019 by Mahendra Bimantara Putra

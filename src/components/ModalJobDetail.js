@@ -94,6 +94,7 @@ const ModalJobDetail = props => {
                       <img
                         src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${props.logo}`}
                         width="300px"
+                        alt="logo"
                       />
                     </div>
                   </div>
@@ -101,7 +102,7 @@ const ModalJobDetail = props => {
               </div>
               <div className="container" style={{ marginTop: '0px' }}>
                 <div className="row">
-                  <div className="col-12 col-lg-8 text-justify">
+                  <div className="col-12 col-lg-12 text-justify">
                     <div className="card shadow border-0">
                       <div className="card-body p-5">
                         <p
@@ -120,7 +121,7 @@ const ModalJobDetail = props => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-lg-4">
+                  <div className="col-12 col-lg-12" style={{ marginTop: '5%' }}>
                     <div className="card shadow border-0">
                       <div className="card-body p-5">
                         <h4 className="text-center">Tentang {props.company}</h4>
@@ -167,15 +168,15 @@ const ModalJobDetail = props => {
 //   left: '0'
 // };
 
-const squareLogo = {
-  overflow: 'hidden',
-  position: 'absolute'
-};
+// const squareLogo = {
+//   overflow: 'hidden',
+//   position: 'absolute'
+// };
 
-const jumbotron = {
-  backgroundImage:
-    'url(https://www.pngix.com/pngfile/big/11-115194_bright-background-vector-png-background-design-vector-png.png)',
-  backgroundSize: 'cover'
-};
+// const jumbotron = {
+//   backgroundImage:
+//     'url(https://www.pngix.com/pngfile/big/11-115194_bright-background-vector-png-background-design-vector-png.png)',
+//   backgroundSize: 'cover'
+// };
 
 export default ModalJobDetail;

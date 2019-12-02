@@ -15,7 +15,7 @@ const ModalJob = props => (
       <div className="modal-content">
         <div className="modal-header">
           <h5 className="modal-title" id="modalFormJobLabel">
-            {props.formStatus} Job
+            {props.formStatus} Pekerjaan
           </h5>
           <button
             type="button"

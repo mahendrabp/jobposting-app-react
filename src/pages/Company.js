@@ -8,7 +8,7 @@ import { Row, Button, Container, Alert } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
 import { connect } from 'react-redux';
-import { getCompanyRedux } from '../redux/action/company';
+import { getCompanyRedux, addCompanyRedux } from '../redux/action/company';
 
 import ModalCompany from '../components/ModalCompany';
 
@@ -81,7 +81,7 @@ class Company extends React.Component {
 
   onSubmitHandler = e => {
     e.preventDefault();
-    var url;
+    // var url;
     var payload = new FormData();
     payload.set('name', this.state.name);
     payload.append('logo', this.state.logo);
@@ -89,8 +89,7 @@ class Company extends React.Component {
     payload.set('description', this.state.description);
 
     if (this.state.formStatus === 'Add') {
-      url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies';
-      this.addCompany(url, payload);
+      this.addCompany(payload);
     } else {
       this.editCompany(
         `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${this.state.companyIdSelected}`,
@@ -99,35 +98,51 @@ class Company extends React.Component {
     }
   };
 
-  addCompany = (url, payload) => {
-    axios
-      .post(url, payload)
-      .then(response => {
-        console.log(response);
-        var company = [...this.state.data];
-        // console.log(company);
-        company.push(response.data); //sebelumya data.data.result
-        console.log(response.data);
-        this.setState({
-          data: company,
-          name: '',
-          logo: '',
-          location: '',
-          description: '',
-          formStatus: 'Add',
-          isError: response.data.error,
-          message: response.data.message
-        });
-        this.getDataCompany();
-        this.closeModalForm();
-        this.onShowAlert();
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({
-          buttonDisabled: false
-        });
-      });
+  addCompany = async payload => {
+    // e.preventDefault();
+    // 					props.dispatch(addCompany({ name, location, logo, description }))
+    // 					setTimeout(() => {
+    // 						props.history.push('/companies')
+    //           }, 500)
+
+    await this.props.dispatch(addCompanyRedux(payload));
+
+    this.setState({
+      isVisible: true,
+      message: this.props.company.message
+    });
+    this.getDataCompany();
+    this.closeModalForm();
+    this.onShowAlert();
+
+    // axios
+    //   .post(url, payload)
+    //   .then(response => {
+    //     console.log(response);
+    //     var company = [...this.state.data];
+    //     // console.log(company);
+    //     company.push(response.data); //sebelumya data.data.result
+    //     console.log(response.data);
+    // this.setState({
+    //   data: company,
+    //   name: '',
+    //   logo: '',
+    //   location: '',
+    //   description: '',
+    //   formStatus: 'Add',
+    //   isError: response.data.error,
+    //   message: response.data.message
+    // });
+    //     this.getDataCompany();
+    //     this.closeModalForm();
+    //     this.onShowAlert();
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     this.setState({
+    //       buttonDisabled: false
+    //     });
+    //   });
   };
 
   editHandler = company => {
