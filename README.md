@@ -1,20 +1,20 @@
 # CrownHire : Job posting app
 
 <p align="center">
-    <img title="login" src="https://i.ibb.co/fDVYqwh/login.png" />
+    <img title="login" src="https://i.ibb.co/fDVYqwh/login.png" width='50%' height='50%'/>
 </p>
 
 <p align="center">
-    <img title="dashboard" src="https://i.ibb.co/ZBhVH9P/dashboard.png" />
+    <img title="dashboard" src="https://i.ibb.co/ZBhVH9P/dashboard.png" width='80%' height='60%'/>
 </p>
 <p align="center">
-    <img title="form" src="https://i.ibb.co/MCkTHT0/addjobform.png" />
+    <img title="form" src="https://i.ibb.co/MCkTHT0/addjobform.png" width='50%' height='50%' />
 </p>
 <p align="center">
     <img title="detail" src="https://i.ibb.co/LrvjTGZ/detail.png" />
 </p>
 <p align="center">
-    <img title="detail" src="https://i.ibb.co/2NDySfR/companylist.png" />
+    <img title="companylist" src="https://i.ibb.co/2NDySfR/companylist.png" width='60%' height='60%'/>
 </p>
 
 ## Table Of Contents
@@ -29,7 +29,7 @@
   - [Run server development](#Run-server-development)
   - [Build For Production](#Build-For-Production)
 - [Dependencies](#Dependencies)
-- [License](#License)
+- [License and Support](#License-and-support)
 
 ---
 
@@ -91,9 +91,10 @@ $ npm install
 
 Before start server development or build for production, you should create new .env file. you can found the backend server here.. [https://github.com/mahendrabp/expressjs-crud-boilerplate](https://github.com/mahendrabp/expressjs-crud-boilerplate)
 
+<!--
 ```sh
 BASE_URL_API=<Backend-api-url>
-```
+``` -->
 
 ##### Run server development
 
@@ -117,17 +118,16 @@ $ npm run build
 
 List of depedencies using in this project
 
-| Plugin                                                                             | Description                                                                                                           |
-| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| [ReactJS](https://reactjs.org)                                                     | JavaScript library for building user interfaces                                                                       |
-| [Axios](https://github.com/axios/axios)                                            | HTTP client for request API                                                                                           |
-| [Bootstrap](https://getbootstrap.com)                                              | CSS Framework                                                                                                         |
-| [Reactstrap](https://reactstrap.github.io)                                         | CSS Framework                                                                                                         |
-| [Moment](https://momentjs.com)                                                     | Manipulate time                                                                                                       |
-| [Redux](https://redux.js.org)                                                      | Global State Management                                                                                               |
-| [Redux Promise Middleware](https://www.npmjs.com/package/redux-promise-middleware) | Promise handler for react redux                                                                                       |
-| [Local-storage]()                                                                  | web storage that allows Javascript websites and apps to store and access data right in the browser                    |
-| [Local-storage]()                                                                  | web storage that allows Javascript websites and apps to store and access data right in the browser with no expiration |
+| Plugin                                                                             | Description                                                                                        |
+| ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [ReactJS](https://reactjs.org)                                                     | JavaScript library for building user interfaces                                                    |
+| [Axios](https://github.com/axios/axios)                                            | HTTP client for request API                                                                        |
+| [Bootstrap](https://getbootstrap.com)                                              | CSS Framework                                                                                      |
+| [Reactstrap](https://reactstrap.github.io)                                         | CSS Framework                                                                                      |
+| [Moment](https://momentjs.com)                                                     | Manipulate time                                                                                    |
+| [Redux](https://redux.js.org)                                                      | Global State Management                                                                            |
+| [Redux Promise Middleware](https://www.npmjs.com/package/redux-promise-middleware) | Promise handler for react redux                                                                    |
+| [Local-storage]()                                                                  | web storage that allows Javascript websites and apps to store and access data right in the browser |
 
 ## License and Support
 
