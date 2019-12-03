@@ -11,7 +11,8 @@ import { connect } from 'react-redux';
 import {
   getCompanyRedux,
   addCompanyRedux,
-  deleteCompanyRedux
+  deleteCompanyRedux,
+  updateCompanyRedux
 } from '../redux/action/company';
 
 import ModalCompany from '../components/ModalCompany';
@@ -94,10 +95,7 @@ class Company extends React.Component {
     if (this.state.formStatus === 'Add') {
       this.addCompany(payload);
     } else {
-      this.editCompany(
-        `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${this.state.companyIdSelected}`,
-        payload
-      );
+      this.editCompany(this.state.companyIdSelected, payload);
     }
   };
 
@@ -135,47 +133,59 @@ class Company extends React.Component {
     });
   };
 
-  editCompany = (url, payload) => {
-    axios
-      .patch(url, payload)
-      .then(response => {
-        console.log(response);
-        let companies = [...this.state.data];
-        let index = companies.findIndex(
-          company => company.id === this.state.jobIdSelected
-        );
-        // let res = response.data.data;
-        console.log(index);
-        console.log(this.logo);
-        // console.log(response.data.error);
-        // console.log(response.data.message);
-
-        // companies[index].name = res.name;
-        // companies[index].logo = response.logo;
-        // companies[index].description = res.description;
-        // companies[index].location = res.location;
-
-        this.setState({
-          // data: companies,
-          name: '',
-          description: '',
-          logo: '',
-          location: '',
-          formStatus: 'Edit',
-          isError: response.data.error,
-          message: response.data.message
-        });
-
-        this.getDataCompany();
-        this.closeModalForm();
-        this.onShowAlert();
-      })
-      .catch(err => {
-        this.setState({
-          logo: '',
-          formStatus: 'Add'
-        });
+  editCompany = async (id, payload) => {
+    try {
+      await this.props.dispatch(updateCompanyRedux(id, payload));
+      this.setState({
+        isVisible: true,
+        message: this.props.company.message,
+        formStatus: 'Add'
       });
+      this.getDataCompany();
+      this.closeModalForm();
+      this.onShowAlert();
+    } catch (error) {
+      console.log(error);
+      alert(this.props.company.message);
+      this.getDataCompany();
+    }
+    // axios
+    //   .patch(url, payload)
+    //   .then(response => {
+    //     console.log(response);
+    //     let companies = [...this.state.data];
+    //     let index = companies.findIndex(
+    //       company => company.id === this.state.jobIdSelected
+    //     );
+    //     // let res = response.data.data;
+    //     console.log(index);
+    //     console.log(this.logo);
+    //     // console.log(response.data.error);
+    //     // console.log(response.data.message);
+    //     // companies[index].name = res.name;
+    //     // companies[index].logo = response.logo;
+    //     // companies[index].description = res.description;
+    //     // companies[index].location = res.location;
+    //     this.setState({
+    //       // data: companies,
+    //       name: '',
+    //       description: '',
+    //       logo: '',
+    //       location: '',
+    //       formStatus: 'Edit',
+    //       isError: response.data.error,
+    //       message: response.data.message
+    //     });
+    //     this.getDataCompany();
+    //     this.closeModalForm();
+    //     this.onShowAlert();
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       logo: '',
+    //       formStatus: 'Add'
+    //     });
+    //   });
   };
 
   deleteCompany = async id => {

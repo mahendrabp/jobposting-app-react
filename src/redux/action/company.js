@@ -18,11 +18,12 @@ export const addCompanyRedux = data => {
     )
   };
 };
+
 export const updateCompanyRedux = (id, data) => {
   return {
     type: 'UPDATE_COMPANY',
-    payload: axios.post(
-      `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies${id}`,
+    payload: axios.patch(
+      `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${id}`,
       data
     )
   };

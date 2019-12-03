@@ -50,6 +50,27 @@ const company = (state = initialState, action) => {
         message: action.payload.response.data.message,
         company: [...state.company]
       };
+    case 'UPDATE_COMPANY_PENDING':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'UPDATE_COMPANY_REJECTED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true
+      };
+    case 'UPDATE_COMPANY_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        message: action.payload.data.message,
+        company: state.company.filter(i =>
+          i.id === action.id ? action.payload.data.data : i
+        )
+      };
 
     case 'DELETE_COMPANY_PENDING':
       return {
