@@ -4,7 +4,8 @@ const initialState = {
   isFulfilled: false,
   isRejected: false,
   totalPage: '',
-  infoPage: ''
+  infoPage: '',
+  message: ''
 };
 
 const job = (state = initialState, action) => {
@@ -51,10 +52,12 @@ const job = (state = initialState, action) => {
         isError: true
       };
     case 'ADD_JOB_FULFILLED':
+      console.log(action.payload.data);
       return {
         ...state,
         isLoading: false,
         isError: false,
+        message: action.payload.data.message,
         job: [...state.job, action.payload.data.data]
       };
 
@@ -74,6 +77,7 @@ const job = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
+        message: action.payload.data.message,
         job: state.job.map(i =>
           i.id === action.id ? action.payload.data.data : i
         )
@@ -88,13 +92,15 @@ const job = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        isError: true
+        isError: true,
+        message: action.payload.data.message
       };
     case 'DELETE_JOB_FULFILLED':
       return {
         ...state,
         isLoading: false,
         isError: false,
+        message: action.payload.data.message,
         job: state.job.filter(i => i.id !== action.id)
       };
     default: {

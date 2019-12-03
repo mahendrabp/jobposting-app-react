@@ -10,6 +10,9 @@ import {
   updateJobRedux
 } from '../redux/action/job';
 
+import { getCompanyRedux } from '../redux/action/company';
+import { getCategoryRedux } from '../redux/action/category';
+
 // reactstrap components
 import {
   FormGroup,
@@ -190,36 +193,46 @@ class Job extends React.Component {
     }
   };
 
-  dataCategory = () => {
-    const url =
-      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
-    Axios.get(url)
-      .then(result => {
-        const dataCategory = result.data.data;
-        console.log(result.data.data);
-        this.setState({
-          dataCategory: dataCategory
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  dataCategory = async () => {
+    const result = await this.props.dispatch(getCategoryRedux());
+    // console.log(result.value.data.data);
+    this.setState({
+      dataCategory: result.value.data.data
+    });
+    // const url =
+    //   'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
+    // Axios.get(url)
+    //   .then(result => {
+    //     const dataCategory = result.data.data;
+    //     console.log(result.data.data);
+    //     this.setState({
+    //       dataCategory: dataCategory
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
-  dataCompany = () => {
-    let url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies`;
-    Axios.get(url)
-      .then(result => {
-        console.log(result.data.data);
-        const data = result.data.data;
-        // console.log(data);
-        this.setState({
-          dataCompany: data
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  dataCompany = async () => {
+    const result = await this.props.dispatch(getCompanyRedux());
+    // console.log(result.value.data.data);
+    this.setState({
+      dataCompany: result.value.data.data
+    });
+    // let url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies`;
+    // Axios.get(url)
+    //   .then(result => {
+    //     console.log(result.data.data);
+    //     const data = result.data.data;
+    //     // console.log(data);
+    //     this.setState({
+    //       dataCompany: data
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   };
 
   getSort = e => {
@@ -447,8 +460,6 @@ class Job extends React.Component {
     e.preventDefault();
     this.setState({ buttonDisabled: true });
 
-    var url;
-
     var payload = new FormData();
     payload.set('name', this.state.name);
     payload.set('description', this.state.description);
@@ -495,7 +506,7 @@ class Job extends React.Component {
   };
 
   jobAlert = () => {
-    if (!this.state.isError) {
+    if (this.props.job.isError == false) {
       return (
         <Alert
           color="success"
@@ -503,7 +514,7 @@ class Job extends React.Component {
           style={alertFixed}
           className="text-center"
         >
-          {this.state.message}
+          {this.props.job.message}
         </Alert>
       );
     } else if (this.state.isError === '' || this.state.isError === null) {
@@ -641,6 +652,7 @@ class Job extends React.Component {
       try {
         await this.props.dispatch(deleteJobRedux(id));
         this.getJobs();
+        this.onShowAlert();
       } catch (error) {}
       // var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${id}`;
       // // const header = {
@@ -1018,7 +1030,8 @@ const alertFixed = {
 };
 const mapStateToProps = state => {
   return {
-    job: state.job
+    job: state.job,
+    company: state.company
   };
 };
 export default connect(mapStateToProps)(Job);
