@@ -27,3 +27,11 @@ export const updateCompanyRedux = (id, data) => {
     )
   };
 };
+export const deleteCompanyRedux = id => {
+  return {
+    type: 'DELETE_COMPANY',
+    payload: axios.delete(
+      `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${id}`
+    )
+  };
+};

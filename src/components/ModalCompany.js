@@ -57,7 +57,7 @@ const ModalCompany = props => (
             <FormGroup>
               <label for="location">Location</label>
               <Input
-                type="text"
+                type="textarea"
                 name="location"
                 id="location"
                 className="form-control"

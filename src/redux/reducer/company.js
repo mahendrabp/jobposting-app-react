@@ -23,7 +23,7 @@ const company = (state = initialState, action) => {
       return {
         ...state,
         isloading: false,
-        isError: false,
+        // isError: '',
         company: action.payload.data.data
       };
 
@@ -50,6 +50,26 @@ const company = (state = initialState, action) => {
         isError: true,
         message: action.payload.response.data.message,
         company: [...state.company]
+      };
+
+    case 'DELETE_COMPANY_PENDING':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'DELETE_COMPANY_REJECTED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true
+      };
+    case 'DELETE_COMPANY_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        message: action.payload.data.message,
+        company: state.company.map(i => i.id !== action.id)
       };
 
     default: {
