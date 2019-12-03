@@ -64,10 +64,13 @@ export const getJobRedux = (
   };
 };
 
-export const pushJobRedux = job => {
+export const addJobRedux = data => {
   return {
-    type: 'PUSH_JOB',
-    payload: job
+    type: 'ADD_JOB',
+    payload: axios.post(
+      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs',
+      data
+    )
   };
 };
 export const updateJobRedux = job => {
@@ -76,9 +79,12 @@ export const updateJobRedux = job => {
     payload: job
   };
 };
-export const deleteJobRedux = jobId => {
+export const deleteJobRedux = id => {
   return {
-    type: 'DELETE_JOBB',
-    payload: jobId
+    type: 'DELETE_JOB',
+    id,
+    payload: axios.delete(
+      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/' + id
+    )
   };
 };

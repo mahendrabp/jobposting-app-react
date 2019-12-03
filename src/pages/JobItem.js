@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 
 const JobItem = props =>
   props.job.job.map(job => {
-    console.log(job.id);
+    // console.log(job.id);
     var menuSelectedClass = '';
     let deletebutton;
     if (ls.get('token') && ls.get('token') !== undefined) {

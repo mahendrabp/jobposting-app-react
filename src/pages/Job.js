@@ -3,8 +3,8 @@ import Axios from 'axios';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getJobRedux, deleteJobRedux } from '../redux/action/job';
-import { pushJobRedux } from '../redux/action/job';
+import { getJobRedux, deleteJobRedux, addJobRedux } from '../redux/action/job';
+
 // reactstrap components
 import {
   FormGroup,
@@ -463,8 +463,7 @@ class Job extends React.Component {
     // this.addJob(url, payload, header);
 
     if (this.state.formStatus === 'Tambah') {
-      url = 'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs';
-      this.addJob(url, payload);
+      this.addJob(payload);
     } else {
       url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${this.state.jobIdSelected}`;
       this.editJob(url, payload);
@@ -508,43 +507,15 @@ class Job extends React.Component {
     }
   };
 
-  addJob = (url, payload) => {
-    axios
-      .post(url, payload)
-      .then(response => {
-        // console.log(response.data.error);
-        // console.log(response.data.message);
-        // var job = [...this.state.data];
-        var isError = response.data.error;
-        var message = response.data.message;
-        var job = response.data.data;
-        console.log(job);
-        console.log(response.data.data);
-        // job.push(response.data.data); //sebelumya data.data.result
-        // console.log(response.data.data);
-
-        this.props.dispatch(pushJobRedux(job));
-
-        this.setState({
-          // data: job,
-          name: '',
-          description: '',
-          location: '',
-          category_id: '',
-          company_id: '',
-          salary: '',
-          formStatus: 'Tambah',
-          isError: isError,
-          message: message,
-          isVisible: true
-        });
-        this.getJobs();
-        this.closeModalForm();
-        this.onShowAlert();
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  addJob = async payload => {
+    try {
+      await this.props.dispatch(addJobRedux(payload));
+      this.getJobs();
+      this.closeModalForm();
+      this.onShowAlert();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // addJobInvalid = () => {
@@ -658,45 +629,49 @@ class Job extends React.Component {
     })
   ];
 
-  deleteButtonHandler = id => {
+  deleteButtonHandler = async id => {
     if (window.confirm('Are you sure to delete this job?')) {
-      var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${id}`;
-      // const header = {
-      //   headers: {
-      //     Authorization: `Bearer ${ls.get('token')}`
-      //   }
-      // };
-      axios
-        .delete(url)
-        .then(response => {
-          var jobs = [...this.state.data];
-          var index = jobs.findIndex(job => job.id === id);
-          // console.log(jobs);
-          console.log(response);
-          // console.log(index);
-          // jobs.splice(index, 1);
-          console.log(jobs);
+      try {
+        await this.props.dispatch(deleteJobRedux(id));
+        this.getJobs();
+      } catch (error) {}
+      // var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${id}`;
+      // // const header = {
+      // //   headers: {
+      // //     Authorization: `Bearer ${ls.get('token')}`
+      // //   }
+      // // };
+      // axios
+      //   .delete(url)
+      //   .then(response => {
+      //     var jobs = [...this.state.data];
+      //     var index = jobs.findIndex(job => job.id === id);
+      //     // console.log(jobs);
+      //     console.log(response);
+      //     // console.log(index);
+      //     // jobs.splice(index, 1);
+      //     console.log(jobs);
 
-          this.props.dispatch(deleteJobRedux(index));
+      //     this.props.dispatch(deleteJobRedux(index));
 
-          this.setState({
-            // data: jobs,
-            isError: response.data.error,
-            message: response.data.message
-          });
-          this.getJobs(
-            this.state.search,
-            this.state.location,
-            this.state.limit,
-            this.state.page,
-            this.state.sortby,
-            this.state.orderby
-          );
-          this.onShowAlert();
-        })
-        .catch(error => {
-          console.log(error.response);
-        });
+      //     this.setState({
+      //       // data: jobs,
+      //       isError: response.data.error,
+      //       message: response.data.message
+      //     });
+      //     this.getJobs(
+      //       this.state.search,
+      //       this.state.location,
+      //       this.state.limit,
+      //       this.state.page,
+      //       this.state.sortby,
+      //       this.state.orderby
+      //     );
+      //     this.onShowAlert();
+      //   })
+      //   .catch(error => {
+      //     console.log(error.response);
+      //   });
     }
   };
 
