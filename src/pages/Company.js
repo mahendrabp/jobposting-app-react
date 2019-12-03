@@ -105,15 +105,20 @@ class Company extends React.Component {
     // 						props.history.push('/companies')
     //           }, 500)
 
-    await this.props.dispatch(addCompanyRedux(payload));
-
-    this.setState({
-      isVisible: true,
-      message: this.props.company.message
-    });
-    this.getDataCompany();
-    this.closeModalForm();
-    this.onShowAlert();
+    try {
+      await this.props.dispatch(addCompanyRedux(payload));
+      this.setState({
+        isVisible: true,
+        message: this.props.company.message
+      });
+      this.getDataCompany();
+      this.closeModalForm();
+      this.onShowAlert();
+    } catch (error) {
+      console.log(error);
+      alert(this.props.company.message);
+      this.getDataCompany();
+    }
 
     // axios
     //   .post(url, payload)
