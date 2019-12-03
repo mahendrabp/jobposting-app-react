@@ -86,73 +86,10 @@ class Job extends React.Component {
   }
 
   async componentDidMount() {
-    // this.getJobs().then(data => {
-    //   // console.log(data);
-    //   this.setState({
-    //     data
-    //   });
-    // });
-
-    // this
-    //   .getJobs
-    //   // this.state.search,
-    //   // this.state.location,
-    //   // this.state.limit,
-    //   // this.state.page,
-    //   // this.state.sortby,
-    //   // this.state.orderby
-    //   ();
     this.getJobs();
     this.dataCategory();
     this.dataCompany();
-
-    // this.getData = () => {
-    //   this.props.dispatch(getJobRedux());
-    // };
   }
-
-  // async getJobs(
-  //   search = '',
-  //   location = '',
-  //   limit = 5,
-  //   page = 1,
-  //   sortby = 'j.updated_at',
-  //   orderby = 'desc'
-  // ) {
-  //   await this.props.dispatch(
-  //     getJobRedux(search, location, limit, page, sortby, orderby)
-  //   );
-  //   this.setState({
-  //     search: search,
-  //     location: location,
-  //     limit: location,
-  //     page: page,
-  //     sortby: sortby,
-  //     orderby: orderby
-  //   });
-  // }
-  // getJobs = (search, location, limit, page, sortby, orderby) => {
-  //   let url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`;
-  //   Axios.get(url)
-  //     .then(result => {
-  //       const data = result.data.data.result;
-  //       console.log(result.data.status);
-
-  //       this.setState({
-  //         data: data,
-  //         totalPage: result.data.data.infoPage.maxPage,
-  //         infoPage: result.data.data.infoPage
-  //       });
-  //     })
-  //     .catch(err => {
-  //       // console.log(err.response.data.status);
-  //       this.setState({
-  //         // errMessage: 'err.response.data.message.message',
-  //         // errStatus: err.response.data.status,
-  //         data: []
-  //       });
-  //     });
-  // };
 
   getJobs = async (
     search = '',
@@ -161,37 +98,33 @@ class Job extends React.Component {
     page = 1,
     sortby = 'j.updated_at',
     orderby = 'desc'
-  ) => {
-    // const result = await this.props.dispatch(
-    //   getJobRedux(search, location, limit, page, sortby, orderby)
-    // );
-    // const dataResult = result.value.result.data.data;
-    // // console.log(result.value.result.data.data.infoPage);
-    // this.setState({
-    //   data: dataResult.result,
-    //   totalPage: dataResult.infoPage.maxPage,
-    //   infoPage: dataResult.infoPage
-    // });
+  ) =>
+    // search = '',
+    // location = '',
+    // limit = 5,
+    // page = 1,
+    // sortby = 'j.updated_at',
+    // orderby = 'desc'
+    {
+      try {
+        const result = await this.props.dispatch(
+          getJobRedux(search, location, limit, page, sortby, orderby)
+        );
 
-    try {
-      const result = await this.props.dispatch(
-        getJobRedux(search, location, limit, page, sortby, orderby)
-      );
+        const dataResult = result.value.result.data.data;
 
-      const dataResult = result.value.result.data.data;
-
-      this.setState({
-        data: dataResult.result
-        // totalPage: dataResult.infoPage.maxPage,
-        // infoPage: dataResult.infoPage
-      });
-    } catch (err) {
-      console.log(err);
-      this.setState({
-        data: []
-      }); // TypeError: failed to fetch
-    }
-  };
+        this.setState({
+          data: dataResult.result
+          // totalPage: dataResult.infoPage.maxPage,
+          // infoPage: dataResult.infoPage
+        });
+      } catch (err) {
+        console.log(err);
+        this.setState({
+          data: []
+        }); // TypeError: failed to fetch
+      }
+    };
 
   dataCategory = async () => {
     const result = await this.props.dispatch(getCategoryRedux());
@@ -199,19 +132,6 @@ class Job extends React.Component {
     this.setState({
       dataCategory: result.value.data.data
     });
-    // const url =
-    //   'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/categories';
-    // Axios.get(url)
-    //   .then(result => {
-    //     const dataCategory = result.data.data;
-    //     console.log(result.data.data);
-    //     this.setState({
-    //       dataCategory: dataCategory
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   };
 
   dataCompany = async () => {
@@ -220,19 +140,6 @@ class Job extends React.Component {
     this.setState({
       dataCompany: result.value.data.data
     });
-    // let url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies`;
-    // Axios.get(url)
-    //   .then(result => {
-    //     console.log(result.data.data);
-    //     const data = result.data.data;
-    //     // console.log(data);
-    //     this.setState({
-    //       dataCompany: data
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   };
 
   getSort = e => {
@@ -242,12 +149,12 @@ class Job extends React.Component {
       sortby
     });
     this.getJobs(
-      this.props.job.search,
-      this.props.job.location,
-      this.props.job.limit,
-      this.props.job.page,
+      this.state.search,
+      this.state.location,
+      this.state.limit,
+      this.state.page,
       sortby,
-      this.props.job.orderby
+      this.state.orderby
     );
   };
 
@@ -278,23 +185,22 @@ class Job extends React.Component {
       this.setState({
         page: 1
       });
-
       this.getJobs(
         search,
-        this.props.job.location,
-        this.props.job.limit,
-        this.props.job.page,
-        this.props.job.sortby,
-        this.props.job.orderby
+        this.state.location,
+        this.state.limit,
+        this.state.page,
+        this.state.sortby,
+        this.state.orderby
       );
     } else {
       this.getJobs(
         '',
-        this.props.job.location,
-        this.props.job.limit,
-        this.props.job.page,
-        this.props.job.sortby,
-        this.props.job.orderby
+        this.state.location,
+        this.state.limit,
+        this.state.page,
+        this.state.sortby,
+        this.state.orderby
       );
     }
   };
@@ -310,21 +216,21 @@ class Job extends React.Component {
         page: 1
       });
       this.getJobs(
-        this.props.job.search,
+        this.state.search,
         location,
-        this.props.job.limit,
-        this.props.job.page,
-        this.props.job.sortby,
-        this.props.job.orderby
+        this.state.limit,
+        this.state.page,
+        this.state.sortby,
+        this.state.orderby
       );
     } else {
       this.getJobs(
-        this.props.job.search,
+        this.state.search,
         '',
-        this.props.job.limit,
-        this.props.job.page,
-        this.props.job.sortby,
-        this.props.job.orderby
+        this.state.limit,
+        this.state.page,
+        this.state.sortby,
+        this.state.orderby
       );
     }
   };
@@ -337,12 +243,12 @@ class Job extends React.Component {
       limit
     });
     this.getJobs(
-      this.props.job.search,
-      this.props.job.location,
+      this.state.search,
+      this.state.location,
       limit,
       1,
-      this.props.job.sortby,
-      this.props.job.orderby
+      this.state.sortby,
+      this.state.orderby
     );
   };
 
@@ -351,12 +257,12 @@ class Job extends React.Component {
       page
     });
     this.getJobs(
-      this.props.job.search,
-      this.props.job.location,
-      this.props.job.limit,
+      this.state.search,
+      this.state.location,
+      this.state.limit,
       page,
-      this.props.job.sortby,
-      this.props.job.orderby
+      this.state.sortby,
+      this.state.orderby
     );
   };
 
@@ -485,18 +391,6 @@ class Job extends React.Component {
     }
   };
 
-  // getData = async () => {
-  //   const url = await Axios.get('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs');
-  //   const getAllJobs = url.data.data.result;
-  //   console.log(getAllJobs);
-  //   return getAllJobs;
-  // };
-
-  // componentDidUpdate(e) {
-  //   document.documentElement.scrollTop = 0;
-  //   document.scrollingElement.scrollTop = 0;
-  //   this.refs.mainContent.scrollTop = 0;
-  // }
   onShowAlert = () => {
     this.setState({ isVisible: true }, () => {
       window.setTimeout(() => {
@@ -579,41 +473,6 @@ class Job extends React.Component {
       this.closeModalForm();
       this.onShowAlert();
     } catch (error) {}
-    // Axios.patch(url, payload)
-    //   .then(response => {
-    //     let jobs = [...this.state.data];
-    //     // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
-    //     // let res = response.data.data.result;
-    //     // jobs.findIndex(job => job.id === this.state.jobIdSelected);
-    //     // let res = response.data.data.result;
-    //     console.log(response);
-    //     // jobs[index].name = res.nameoke;
-    //     // jobs[index].description = res.description;
-    //     // jobs[index].location = res.location;
-    //     // jobs[index].category_id = res.category_id;
-    //     // jobs[index].company_id = res.company_id;
-    //     // jobs[index].salary = res.salary;
-    //     this.setState({
-    //       data: jobs,
-    //       name: '',
-    //       description: '',
-    //       salary: '',
-    //       location: '',
-    //       category_id: 1,
-    //       company_id: 1,
-    //       formStatus: 'Tambah',
-    //       isError: response.data.error,
-    //       message: response.data.message
-    //     });
-    //     this.getJobs();
-    //     this.closeModalForm();
-    //     this.onShowAlert();
-    //   })
-    //   .catch(err => {
-    //     this.setState({
-    //       buttonDisabled: false
-    //     });
-    //   });
   };
 
   editButtonHandler = job => {
@@ -654,43 +513,6 @@ class Job extends React.Component {
         this.getJobs();
         this.onShowAlert();
       } catch (error) {}
-      // var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${id}`;
-      // // const header = {
-      // //   headers: {
-      // //     Authorization: `Bearer ${ls.get('token')}`
-      // //   }
-      // // };
-      // axios
-      //   .delete(url)
-      //   .then(response => {
-      //     var jobs = [...this.state.data];
-      //     var index = jobs.findIndex(job => job.id === id);
-      //     // console.log(jobs);
-      //     console.log(response);
-      //     // console.log(index);
-      //     // jobs.splice(index, 1);
-      //     console.log(jobs);
-
-      //     this.props.dispatch(deleteJobRedux(index));
-
-      //     this.setState({
-      //       // data: jobs,
-      //       isError: response.data.error,
-      //       message: response.data.message
-      //     });
-      //     this.getJobs(
-      //       this.state.search,
-      //       this.state.location,
-      //       this.state.limit,
-      //       this.state.page,
-      //       this.state.sortby,
-      //       this.state.orderby
-      //     );
-      //     this.onShowAlert();
-      //   })
-      //   .catch(error => {
-      //     console.log(error.response);
-      //   });
     }
   };
 

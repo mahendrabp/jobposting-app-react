@@ -3,7 +3,6 @@ import React from 'react';
 import CompanyItem from './CompanyItem';
 import NavBar from '../components/NavBar';
 
-import axios from 'axios';
 import { Row, Button, Container, Alert } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
