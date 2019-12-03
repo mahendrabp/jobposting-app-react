@@ -8,7 +8,11 @@ import { Row, Button, Container, Alert } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
 import { connect } from 'react-redux';
-import { getCompanyRedux, addCompanyRedux } from '../redux/action/company';
+import {
+  getCompanyRedux,
+  addCompanyRedux,
+  deleteCompanyRedux
+} from '../redux/action/company';
 
 import ModalCompany from '../components/ModalCompany';
 
@@ -30,7 +34,6 @@ class Company extends React.Component {
   }
 
   componentDidMount() {
-    // this.getCompany();
     this.getDataCompany();
   }
 
@@ -63,7 +66,7 @@ class Company extends React.Component {
   };
 
   companyAlert = () => {
-    if (!this.state.isError) {
+    if (this.props.company.isError === false) {
       return (
         <Alert
           color="success"
@@ -71,10 +74,10 @@ class Company extends React.Component {
           style={alertFixed}
           className="text-center"
         >
-          {this.state.message}
+          {this.props.company.message}
         </Alert>
       );
-    } else if (this.state.isError === '' || this.state.isError === null) {
+    } else {
       return <div></div>;
     }
   };
@@ -119,35 +122,6 @@ class Company extends React.Component {
       alert(this.props.company.message);
       this.getDataCompany();
     }
-
-    // axios
-    //   .post(url, payload)
-    //   .then(response => {
-    //     console.log(response);
-    //     var company = [...this.state.data];
-    //     // console.log(company);
-    //     company.push(response.data); //sebelumya data.data.result
-    //     console.log(response.data);
-    // this.setState({
-    //   data: company,
-    //   name: '',
-    //   logo: '',
-    //   location: '',
-    //   description: '',
-    //   formStatus: 'Add',
-    //   isError: response.data.error,
-    //   message: response.data.message
-    // });
-    //     this.getDataCompany();
-    //     this.closeModalForm();
-    //     this.onShowAlert();
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     this.setState({
-    //       buttonDisabled: false
-    //     });
-    //   });
   };
 
   editHandler = company => {
@@ -204,28 +178,11 @@ class Company extends React.Component {
       });
   };
 
-  deleteCompany = id => {
+  deleteCompany = async id => {
     if (window.confirm('are you sure delete this company')) {
-      var url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/companies/${id}`;
-      axios
-        .delete(url)
-        .then(response => {
-          var companies = [...this.state.data];
-          var index = companies.findIndex(company => company.id === id);
-          companies.splice(index, 1);
-          console.log(response);
-          this.setState({
-            // data: companies,
-            isError: response.data.error,
-            message: response.data.message
-          });
-
-          this.getDataCompany();
-          this.onShowAlert();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      await this.props.dispatch(deleteCompanyRedux(id));
+      this.getDataCompany();
+      this.onShowAlert();
     }
   };
 
@@ -323,5 +280,3 @@ const mapStateToProps = state => {
   };
 };
 export default connect(mapStateToProps)(Company);
-
-// export default Company;
