@@ -73,10 +73,14 @@ export const addJobRedux = data => {
     )
   };
 };
-export const updateJobRedux = job => {
+export const updateJobRedux = (id, data) => {
   return {
     type: 'UPDATE_JOB',
-    payload: job
+    id,
+    payload: axios.patch(
+      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/' + id,
+      data
+    )
   };
 };
 export const deleteJobRedux = id => {

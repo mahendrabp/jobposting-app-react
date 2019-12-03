@@ -58,6 +58,27 @@ const job = (state = initialState, action) => {
         job: [...state.job, action.payload.data.data]
       };
 
+    case 'UPDATE_JOB_PENDING':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'UPDATE_JOB_REJECTED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true
+      };
+    case 'UPDATE_JOB_FULFILLED':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        job: state.job.map(i =>
+          i.id === action.id ? action.payload.data.data : i
+        )
+      };
+
     case 'DELETE_JOB_PENDING':
       return {
         ...state,

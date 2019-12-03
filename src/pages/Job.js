@@ -3,7 +3,12 @@ import Axios from 'axios';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getJobRedux, deleteJobRedux, addJobRedux } from '../redux/action/job';
+import {
+  getJobRedux,
+  deleteJobRedux,
+  addJobRedux,
+  updateJobRedux
+} from '../redux/action/job';
 
 // reactstrap components
 import {
@@ -465,8 +470,7 @@ class Job extends React.Component {
     if (this.state.formStatus === 'Tambah') {
       this.addJob(payload);
     } else {
-      url = `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/${this.state.jobIdSelected}`;
-      this.editJob(url, payload);
+      this.editJob(this.state.jobIdSelected, payload);
     }
   };
 
@@ -557,45 +561,48 @@ class Job extends React.Component {
     });
   };
 
-  editJob = (url, payload) => {
-    Axios.patch(url, payload)
-      .then(response => {
-        let jobs = [...this.state.data];
-        // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
-        // let res = response.data.data.result;
-        // jobs.findIndex(job => job.id === this.state.jobIdSelected);
-        // let res = response.data.data.result;
-        console.log(response);
-
-        // jobs[index].name = res.nameoke;
-        // jobs[index].description = res.description;
-        // jobs[index].location = res.location;
-        // jobs[index].category_id = res.category_id;
-        // jobs[index].company_id = res.company_id;
-        // jobs[index].salary = res.salary;
-
-        this.setState({
-          data: jobs,
-          name: '',
-          description: '',
-          salary: '',
-          location: '',
-          category_id: 1,
-          company_id: 1,
-          formStatus: 'Tambah',
-          isError: response.data.error,
-          message: response.data.message
-        });
-
-        this.getJobs();
-        this.closeModalForm();
-        this.onShowAlert();
-      })
-      .catch(err => {
-        this.setState({
-          buttonDisabled: false
-        });
-      });
+  editJob = async (id, payload) => {
+    try {
+      await this.props.dispatch(updateJobRedux(id, payload));
+      this.getJobs();
+      this.closeModalForm();
+      this.onShowAlert();
+    } catch (error) {}
+    // Axios.patch(url, payload)
+    //   .then(response => {
+    //     let jobs = [...this.state.data];
+    //     // let index = jobs.findIndex(job => job.id === this.state.jobIdSelected);
+    //     // let res = response.data.data.result;
+    //     // jobs.findIndex(job => job.id === this.state.jobIdSelected);
+    //     // let res = response.data.data.result;
+    //     console.log(response);
+    //     // jobs[index].name = res.nameoke;
+    //     // jobs[index].description = res.description;
+    //     // jobs[index].location = res.location;
+    //     // jobs[index].category_id = res.category_id;
+    //     // jobs[index].company_id = res.company_id;
+    //     // jobs[index].salary = res.salary;
+    //     this.setState({
+    //       data: jobs,
+    //       name: '',
+    //       description: '',
+    //       salary: '',
+    //       location: '',
+    //       category_id: 1,
+    //       company_id: 1,
+    //       formStatus: 'Tambah',
+    //       isError: response.data.error,
+    //       message: response.data.message
+    //     });
+    //     this.getJobs();
+    //     this.closeModalForm();
+    //     this.onShowAlert();
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       buttonDisabled: false
+    //     });
+    //   });
   };
 
   editButtonHandler = job => {
