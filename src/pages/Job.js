@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
-import Axios from 'axios';
-import axios from 'axios';
+// import Axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -290,6 +291,7 @@ class Job extends React.Component {
                 }`}
               >
                 <a
+                  href="/#"
                   className="page-link"
                   onClick={() => this.getPage(page)}
                   style={{ cursor: 'pointer' }}
@@ -400,7 +402,7 @@ class Job extends React.Component {
   };
 
   jobAlert = () => {
-    if (this.props.job.isError == false) {
+    if (this.props.job.isError === false) {
       return (
         <Alert
           color="success"

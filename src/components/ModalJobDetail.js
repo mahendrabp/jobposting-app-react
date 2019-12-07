@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 // import Job from '../pages/Job';
 // import { Container } from '@material-ui/core';
-import moment from 'moment';
+// import moment from 'moment';
 import 'moment-timezone';
 import 'moment/locale/id';
 import rupiah from 'rupiah-format';

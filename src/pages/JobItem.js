@@ -79,7 +79,7 @@ const JobItem = props =>
               <Row className="justify-content-center">
                 <Col md="4" xs="12" sm="12">
                   <div>
-                    <a href="" onClick={e => e.preventDefault()}>
+                    <a href="/#" onClick={e => e.preventDefault()}>
                       <img
                         alt="..."
                         // src={require('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +

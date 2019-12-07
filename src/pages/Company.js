@@ -205,7 +205,8 @@ class Company extends React.Component {
     console.log(e.target.files[0]);
     if (
       typeof e.target.files[0] !== 'undefined' ||
-      e.target.files[0] == e.target.files[0]
+      // eslint-disable-next-line no-self-compare
+      e.target.files[0] === e.target.files[0]
     ) {
       this.setState({
         logo: e.target.files[0]

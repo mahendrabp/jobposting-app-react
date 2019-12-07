@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import ls from 'local-storage';
 import backgroundImage from '../assets/img/icons/common/4.svg';
