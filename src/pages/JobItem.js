@@ -82,10 +82,10 @@ const JobItem = props =>
                     <a href="/#" onClick={e => e.preventDefault()}>
                       <img
                         alt="..."
-                        // src={require('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +
+                        // src={require('https://crownhire.site/public/logo' +
                         //   job.log)}
                         style={thumbImg}
-                        src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${job.logo}`}
+                        src={`https://crownhire.site/public/logo/${job.logo}`}
                       />
                     </a>
                   </div>
@@ -239,10 +239,10 @@ const thumbImg = {
 //                         <a href="" onClick={e => e.preventDefault()}>
 //                           <img
 //                             alt="..."
-//                             // src={require('http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo' +
+//                             // src={require('https://crownhire.site/public/logo' +
 //                             //   job.log)}
 
-//                             src={`http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/public/logo/${job.logo}`}
+//                             src={`https://crownhire.site/public/logo/${job.logo}`}
 //                           />
 //                         </a>
 //                       </div>

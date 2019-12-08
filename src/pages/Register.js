@@ -79,7 +79,7 @@ class Register extends React.Component {
     this.setState({ buttonDisabled: true });
 
     var url =
-      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/users/register';
+      'https://crownhire.site/api/v1/users/register';
     var payload = {
       email: this.state.email,
       password: this.state.password

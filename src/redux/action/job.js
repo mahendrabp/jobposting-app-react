@@ -23,7 +23,7 @@ import axios from 'axios';
 
 // axios
 //   .get(
-//     `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
+//     `https://crownhire.site/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
 //   )
 //         .then(result => resolve(result))
 //         .catch(err => reject(err));
@@ -44,7 +44,7 @@ export const getJobRedux = (
     payload: new Promise((resolve, reject) => {
       axios
         .get(
-          `http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
+          `https://crownhire.site/api/v1/jobs?name=${search}&location=${location}&limit=${limit}&page=${page}&sortby=${sortby}&orderby=${orderby}`
         )
         .then(result => {
           resolve({
@@ -68,7 +68,7 @@ export const addJobRedux = data => {
   return {
     type: 'ADD_JOB',
     payload: axios.post(
-      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs',
+      'https://crownhire.site/api/v1/jobs',
       data
     )
   };
@@ -78,7 +78,7 @@ export const updateJobRedux = (id, data) => {
     type: 'UPDATE_JOB',
     id,
     payload: axios.patch(
-      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/' + id,
+      'https://crownhire.site/api/v1/jobs/' + id,
       data
     )
   };
@@ -88,7 +88,7 @@ export const deleteJobRedux = id => {
     type: 'DELETE_JOB',
     id,
     payload: axios.delete(
-      'http://ec2-100-24-23-28.compute-1.amazonaws.com:8001/api/v1/jobs/' + id
+      'https://crownhire.site/api/v1/jobs/' + id
     )
   };
 };
