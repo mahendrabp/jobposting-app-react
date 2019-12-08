@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import promiseMiddleware from 'redux-promise-middleware';
 
@@ -7,10 +7,7 @@ import rootReducer from './reducer';
 const logger = createLogger();
 const store = createStore(
   rootReducer,
-  compose(
-    applyMiddleware(logger, promiseMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  applyMiddleware(logger, promiseMiddleware)
 );
 
 export default store;
