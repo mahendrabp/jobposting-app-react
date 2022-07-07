@@ -10,7 +10,7 @@
     "jquery": "^3.4.1",
     "local": "^0.3.3",
     "local-storage": "^2.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
